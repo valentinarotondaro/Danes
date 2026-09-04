@@ -4,6 +4,7 @@ import AdminCourseForm from '@/components/admin/AdminCourseForm.vue'
 import AdminLiveClassForm from '@/components/admin/AdminLiveClassForm.vue'
 import AdminEventForm from '@/components/admin/AdminEventForm.vue'
 import AdminBundleForm from '@/components/admin/AdminBundleForm.vue'
+import AdminTeacherForm from '@/components/admin/AdminTeacherForm.vue'
 import EmptyState from '@/components/base/EmptyState.vue'
 
 const route = useRoute()
@@ -14,6 +15,7 @@ const forms = {
   liveClasses: AdminLiveClassForm,
   events: AdminEventForm,
   bundles: AdminBundleForm,
+  teachers: AdminTeacherForm,
 }
 </script>
 

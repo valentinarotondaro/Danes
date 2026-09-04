@@ -1,6 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-serif: "Fraunces", ui-serif, Georgia, serif;
+  --color-cream: #FBF6EE;
+  --color-plum: #4A1F2B;
+  --color-sage: #8FA98C;
+  --color-dusty-blue: #7B9BB3;
+  --color-terracotta: #D98B6E;
 }

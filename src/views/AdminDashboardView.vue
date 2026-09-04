@@ -5,6 +5,7 @@ import * as courseService from '@/services/courseService'
 import * as liveClassService from '@/services/liveClassService'
 import * as eventService from '@/services/eventService'
 import * as bundleService from '@/services/bundleService'
+import * as teacherService from '@/services/teacherService'
 import AdminTable from '@/components/admin/AdminTable.vue'
 import LoadingState from '@/components/base/LoadingState.vue'
 import ErrorState from '@/components/base/ErrorState.vue'
@@ -59,6 +60,16 @@ const tabs = [
     ],
     list: bundleService.listAllBundles,
     remove: bundleService.deleteBundle,
+  },
+  {
+    key: 'teachers',
+    label: 'Teachers',
+    columns: [
+      { key: 'name', label: 'Name' },
+      { key: 'specialty', label: 'Specialty' },
+    ],
+    list: teacherService.listTeachers,
+    remove: teacherService.deleteTeacher,
   },
 ]
 

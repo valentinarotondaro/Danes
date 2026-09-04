@@ -1,0 +1,42 @@
+// src/services/liveClassService.js
+import { ID, Query } from 'appwrite'
+import { databases, DB_ID, COLLECTIONS } from './appwriteClient'
+
+export async function listPublishedLiveClasses() {
+  const res = await databases.listDocuments(DB_ID, COLLECTIONS.LIVE_CLASSES, [
+    Query.equal('published', true),
+    Query.orderAsc('dateTime'),
+  ])
+  return res.documents
+}
+
+export async function listAllLiveClasses() {
+  const res = await databases.listDocuments(DB_ID, COLLECTIONS.LIVE_CLASSES, [
+    Query.orderAsc('dateTime'),
+  ])
+  return res.documents
+}
+
+export async function getLiveClassById(id) {
+  return databases.getDocument(DB_ID, COLLECTIONS.LIVE_CLASSES, id)
+}
+
+export async function createLiveClass(data) {
+  return databases.createDocument(DB_ID, COLLECTIONS.LIVE_CLASSES, ID.unique(), data)
+}
+
+export async function updateLiveClass(id, data) {
+  return databases.updateDocument(DB_ID, COLLECTIONS.LIVE_CLASSES, id, data)
+}
+
+export async function deleteLiveClass(id) {
+  return databases.deleteDocument(DB_ID, COLLECTIONS.LIVE_CLASSES, id)
+}
+
+// Denormalized counter — see spotsBooked note in the provisioning script.
+// Read-then-write; acceptable race-condition risk at this project's scale.
+export async function incrementSpotsBooked(id, currentSpotsBooked) {
+  return databases.updateDocument(DB_ID, COLLECTIONS.LIVE_CLASSES, id, {
+    spotsBooked: (currentSpotsBooked ?? 0) + 1,
+  })
+}

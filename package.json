@@ -1,0 +1,29 @@
+{
+  "name": "danes-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "provision": "node scripts/provision-appwrite.mjs"
+  },
+  "dependencies": {
+    "appwrite": "^26.2.0",
+    "vue": "^3.5.41",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "@vue/test-utils": "^2.5.0",
+    "dotenv": "^17.4.2",
+    "jsdom": "^30.0.1",
+    "node-appwrite": "^29.0.0",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.2.2",
+    "vitest": "^5.0.0"
+  }
+}

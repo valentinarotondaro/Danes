@@ -31,5 +31,16 @@ export async function updateCourse(courseId, data) {
 }
 
 export async function deleteCourse(courseId) {
+  // Cascade delete: Appwrite has no built-in cascading, so the app is
+  // responsible for cleaning up the course's lessons before removing it —
+  // otherwise they'd be orphaned documents with a courseId pointing nowhere.
+  const orphaned = await databases.listDocuments(DB_ID, COLLECTIONS.LESSONS, [
+    Query.equal('courseId', courseId),
+  ])
+  await Promise.all(
+    orphaned.documents.map((lesson) =>
+      databases.deleteDocument(DB_ID, COLLECTIONS.LESSONS, lesson.$id)
+    )
+  )
   return databases.deleteDocument(DB_ID, COLLECTIONS.COURSES, courseId)
 }

@@ -35,6 +35,10 @@ const routes = [
   // Admin
   { path: '/admin', name: 'admin-dashboard', component: () => import('@/views/AdminDashboardView.vue'), meta: { requiresAdmin: true } },
   { path: '/admin/:collection/:id?', name: 'admin-edit', component: () => import('@/views/AdminEditView.vue'), meta: { requiresAdmin: true } },
+
+  // Catch-all — must stay last. Without this, an unmatched URL just renders
+  // a blank page instead of giving the user any feedback.
+  { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('@/views/NotFoundView.vue') },
 ]
 
 const router = createRouter({

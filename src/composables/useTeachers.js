@@ -19,5 +19,16 @@ export function useTeachers() {
     }
   }
 
-  return { teachers, loading, error, fetchTeachers }
+    const teacher = ref(null)
+
+  async function fetchTeacher(id) {
+    if (!id) return            // el curso no tiene profe asignado
+    try {
+      teacher.value = await teacherService.getTeacherById(id)
+    } catch {
+      teacher.value = null     // si falla, la página se muestra igual, sin profe
+    }
+  }
+
+  return { teachers, loading, error, fetchTeachers, teacher, fetchTeacher }
 }

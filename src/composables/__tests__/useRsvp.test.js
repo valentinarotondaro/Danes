@@ -44,4 +44,15 @@ describe('useRsvp', () => {
     expect(eventService.incrementSpotsBooked).toHaveBeenCalledWith('event-1', 5)
     expect(hasRsvpd.value).toBe(true)
   })
+    it('joins the waitlist without touching spotsBooked', async () => {
+    orderService.createOrder.mockResolvedValue({ $id: 'order-2' })
+    const { joinWaitlist, isWaitlisted, hasRsvpd } = useRsvp()
+
+    await joinWaitlist({ $id: 'event-1' })
+
+    expect(orderService.createOrder).toHaveBeenCalledWith('user-1', 'event', 'event-1', 0, 'waitlist')
+    expect(eventService.incrementSpotsBooked).not.toHaveBeenCalled()
+    expect(isWaitlisted.value).toBe(true)
+    expect(hasRsvpd.value).toBe(false)
+  })
 })

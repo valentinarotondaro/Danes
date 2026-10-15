@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "provision": "node scripts/provision-appwrite.mjs"
+    "provision": "node scripts/provision-appwrite.mjs",
+    "seed:city-walks": "node scripts/seed-city-walks.mjs"
   },
   "dependencies": {
     "appwrite": "^26.2.0",

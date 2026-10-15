@@ -1,11 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap');
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600&display=swap');@import "tailwindcss";
 
 @theme {
-  --font-serif: "Fraunces", ui-serif, Georgia, serif;
-  --color-cream: #FBF6EE;
-  --color-plum: #4A1F2B;
-  --color-sage: #8FA98C;
-  --color-dusty-blue: #7B9BB3;
-  --color-terracotta: #D98B6E;
+  /* Tipografía: solo Sora */
+  --font-sans: "Sora", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: var(--font-sans); /* la clase vieja font-serif ahora también es Sora */
+
+  /* Colores del DS */
+  --color-surface: #ffffff;
+  --color-surface-secondary: #f5f5f5;
+  --color-ink: #000000;
+  --color-ink-muted: #666a70;
+  --color-line: #dde1e5;
+  --color-red: #b20e19;
+  --color-red-hover: #8e0b14;
+  --color-red-soft: #fbe7e8;
+  --color-sky: #bfdaf5;
+  --color-sky-strong: #80abd7;
+  --color-sky-soft: #eaf2fa;
+  --color-success: #1a6b3d;
+  --color-success-soft: #e4f3ea;
+
+  /* Nombres viejos apuntando a los colores nuevos,
+     así los componentes viejos no se rompen */
+  --color-cream: var(--color-surface-secondary);
+  --color-plum: var(--color-ink);
+  --color-sage: var(--color-sky-soft);
+  --color-dusty-blue: var(--color-sky);
+  --color-terracotta: var(--color-red);
+
+  /* Un solo radius para todo */
+  --radius-ds: 16px;
+}
+
+@layer base {
+  body {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
 }

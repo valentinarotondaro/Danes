@@ -15,11 +15,11 @@ function colorFor(id) {
       <div v-if="teacher.photoUrl" class="h-14 w-14 shrink-0 overflow-hidden rounded-full">
         <img :src="teacher.photoUrl" :alt="teacher.name" class="h-full w-full object-cover" />
       </div>
-      <div v-else class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-lg font-serif text-white" :class="colorFor(teacher.$id)">
+      <div v-else class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-lg text-white" :class="colorFor(teacher.$id)">
         {{ teacher.name?.[0] }}
       </div>
       <div>
-        <p class="font-serif text-lg text-neutral-900">{{ teacher.name }}</p>
+        <p class="text-lg text-neutral-900">{{ teacher.name }}</p>
         <span v-if="teacher.specialty" class="text-sm text-neutral-500">{{ teacher.specialty }}</span>
       </div>
     </div>

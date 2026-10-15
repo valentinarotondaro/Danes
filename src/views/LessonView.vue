@@ -43,7 +43,7 @@ onMounted(async () => {
     />
 
     <template v-else-if="lesson">
-      <h1 class="mt-4 font-serif text-2xl text-neutral-900">{{ lesson.title }}</h1>
+      <h1 class="mt-4 text-2xl text-neutral-900">{{ lesson.title }}</h1>
       <div class="mt-6 aspect-video overflow-hidden rounded-lg bg-black">
         <iframe
           :src="embedUrl"

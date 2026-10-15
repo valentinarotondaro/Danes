@@ -43,7 +43,7 @@ onMounted(() => {
     <span class="inline-block rounded-full bg-terracotta/15 px-2.5 py-0.5 text-xs font-medium text-terracotta">
       Belong
     </span>
-    <h3 class="mt-2 font-serif text-lg text-neutral-900">{{ event.title }}</h3>
+    <h3 class="mt-2 text-lg text-neutral-900">{{ event.title }}</h3>
     <p class="mt-1 text-sm text-neutral-500">{{ formatDate(event.dateTime) }} · {{ event.location }}</p>
     <p v-if="event.description" class="mt-2 text-sm text-neutral-600">{{ event.description }}</p>
 

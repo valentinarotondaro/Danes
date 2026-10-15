@@ -43,7 +43,7 @@ async function onSubmit() {
 
     <div class="flex items-center justify-center px-6 py-16">
       <form @submit.prevent="onSubmit" class="w-full max-w-sm">
-        <h1 class="font-serif text-3xl text-neutral-900">Log in</h1>
+        <h1 class="text-3xl text-neutral-900">Log in</h1>
         <p class="mt-2 text-neutral-500">Continue where you left off.</p>
 
         <div class="mt-8 space-y-4">

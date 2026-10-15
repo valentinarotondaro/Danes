@@ -59,7 +59,7 @@ onMounted(async () => {
 <template>
   <LoadingState v-if="loading" />
   <form v-else @submit.prevent="onSubmit">
-    <h1 class="font-serif text-2xl text-neutral-900">{{ isEditing ? 'Edit teacher' : 'New teacher' }}</h1>
+    <h1 class="text-2xl text-neutral-900">{{ isEditing ? 'Edit teacher' : 'New teacher' }}</h1>
     <div class="mt-6 space-y-4">
       <FormField v-model="form.name" label="Name" :error="errors.name" />
       <label class="block">

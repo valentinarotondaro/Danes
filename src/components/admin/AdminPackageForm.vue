@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import * as bundleService from '@/services/bundleService'
+import * as packageService from '@/services/packageService'
 import FormField from '@/components/base/FormField.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import LoadingState from '@/components/base/LoadingState.vue'
@@ -34,10 +34,10 @@ async function onSubmit() {
   try {
     const payload = { ...form, price: Number(form.price) }
     if (isEditing) {
-      await bundleService.updateBundle(props.id, payload)
-      successMessage.value = 'Bundle updated.'
+      await packageService.updatePackage(props.id, payload)
+      successMessage.value = 'Package updated.'
     } else {
-      await bundleService.createBundle(payload)
+      await packageService.createPackage(payload)
       router.push({ name: 'admin-dashboard' })
     }
   } catch {
@@ -50,9 +50,9 @@ async function onSubmit() {
 onMounted(async () => {
   if (isEditing) {
     try {
-      Object.assign(form, await bundleService.getBundleById(props.id))
+      Object.assign(form, await packageService.getPackageById(props.id))
     } catch {
-      submitError.value = 'Could not load this bundle.'
+      submitError.value = 'Could not load this package.'
     } finally {
       loading.value = false
     }
@@ -63,7 +63,7 @@ onMounted(async () => {
 <template>
   <LoadingState v-if="loading" />
   <form v-else @submit.prevent="onSubmit">
-    <h1 class="font-serif text-2xl text-neutral-900">{{ isEditing ? 'Edit bundle' : 'New bundle' }}</h1>
+    <h1 class="text-2xl text-neutral-900">{{ isEditing ? 'Edit package' : 'New package' }}</h1>
     <p v-if="!isEditing" class="mt-2 text-sm text-neutral-500">
       Paste the IDs of an existing course/class/event — copy them from each item's Admin edit URL.
     </p>
@@ -85,7 +85,7 @@ onMounted(async () => {
     <p v-if="submitError" class="mt-4 text-sm text-red-600">{{ submitError }}</p>
     <p v-if="successMessage" class="mt-4 text-sm text-green-700">{{ successMessage }}</p>
     <div class="mt-6">
-      <BaseButton type="submit" :loading="saving">{{ isEditing ? 'Save changes' : 'Create bundle' }}</BaseButton>
+      <BaseButton type="submit" :loading="saving">{{ isEditing ? 'Save changes' : 'Create package' }}</BaseButton>
     </div>
   </form>
 </template>

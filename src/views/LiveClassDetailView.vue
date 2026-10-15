@@ -59,7 +59,7 @@ onMounted(async () => {
     <ErrorState v-else-if="error" :message="error" @retry="fetchLiveClass" />
 
     <template v-else-if="liveClass">
-      <h1 class="font-serif text-3xl text-neutral-900">{{ liveClass.title }}</h1>
+      <h1 class="text-3xl text-neutral-900">{{ liveClass.title }}</h1>
       <p class="mt-2 text-neutral-500">
         {{ new Date(liveClass.dateTime).toLocaleString(undefined, { dateStyle: 'full', timeStyle: 'short' }) }}
       </p>

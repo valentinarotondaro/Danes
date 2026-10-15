@@ -101,7 +101,7 @@ onMounted(load)
 <template>
   <div>
     <div class="flex items-center justify-between">
-      <h2 class="font-serif text-xl text-neutral-900">Lessons</h2>
+      <h2 class="text-xl text-neutral-900">Lessons</h2>
       <BaseButton v-if="!showForm" @click="openAddForm" class="w-auto px-4">Add lesson</BaseButton>
     </div>
 

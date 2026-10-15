@@ -4,7 +4,7 @@ import { RouterLink, useRouter } from 'vue-router'
 import * as courseService from '@/services/courseService'
 import * as liveClassService from '@/services/liveClassService'
 import * as eventService from '@/services/eventService'
-import * as bundleService from '@/services/bundleService'
+import * as packageService from '@/services/packageService'
 import * as teacherService from '@/services/teacherService'
 import AdminTable from '@/components/admin/AdminTable.vue'
 import LoadingState from '@/components/base/LoadingState.vue'
@@ -51,15 +51,15 @@ const tabs = [
     remove: eventService.deleteEvent,
   },
   {
-    key: 'bundles',
-    label: 'Bundles',
+    key: 'packages',
+    label: 'Packages',
     columns: [
       { key: 'title', label: 'Title' },
       { key: 'price', label: 'Price (DKK)' },
       { key: 'published', label: 'Published' },
     ],
-    list: bundleService.listAllBundles,
-    remove: bundleService.deleteBundle,
+    list: packageService.listAllPackages,
+    remove: packageService.deletePackage,
   },
   {
     key: 'teachers',
@@ -105,7 +105,7 @@ onMounted(load)
 <template>
   <section class="mx-auto max-w-4xl px-6 py-12">
     <div class="flex items-center justify-between">
-      <h1 class="font-serif text-3xl text-neutral-900">Admin</h1>
+      <h1 class="text-3xl text-neutral-900">Admin</h1>
       <RouterLink :to="{ name: 'admin-edit', params: { collection: activeTabKey } }">
         <BaseButton class="w-auto px-4">New {{ activeTab.label.replace(/s$/, '') }}</BaseButton>
       </RouterLink>

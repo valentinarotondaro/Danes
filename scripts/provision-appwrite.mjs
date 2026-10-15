@@ -186,12 +186,17 @@ const collections = [
       { kind: 'string', key: 'title', size: 128, required: true },
       { kind: 'string', key: 'description', size: 1000, required: false },
       { kind: 'string', key: 'location', size: 255, required: true },
+      { kind: 'string', key: 'city', size: 64, required: false },
+      { kind: 'string', key: 'imageUrl', size: 500, required: false },
       { kind: 'datetime', key: 'dateTime', required: true },
       { kind: 'integer', key: 'capacity', required: true, default: 20 },
       { kind: 'integer', key: 'spotsBooked', required: false, default: 0 },
       { kind: 'boolean', key: 'published', required: true, default: false },
     ],
-    indexes: [{ key: 'dateTime_idx', type: IndexType.Key, attributes: ['dateTime'] }],
+    indexes: [
+      { key: 'dateTime_idx', type: IndexType.Key, attributes: ['dateTime'] },
+      { key: 'city_idx', type: IndexType.Key, attributes: ['city'] },
+    ],
   },
   {
     id: 'bundles',

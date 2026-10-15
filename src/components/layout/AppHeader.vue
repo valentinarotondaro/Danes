@@ -1,29 +1,45 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
+import danesLogo from '@/assets/img/danes-logo.png'
 
 const { isLoggedIn, role, logout } = useAuth()
 </script>
 
 <template>
-  <header class="border-b border-neutral-200 px-6 py-4 flex items-center justify-between">
-    <RouterLink to="/" class="font-bold text-lg tracking-tight">DANES</RouterLink>
+  <header class="sticky top-0 z-50 flex items-center justify-between border-b border-black/10 bg-white px-6 py-4">
+    <RouterLink to="/">
+      <img :src="danesLogo" alt="DANES" class="h-7 w-auto" />
+    </RouterLink>
 
-    <nav class="flex items-center gap-6 text-sm">
-      <RouterLink to="/courses">Learn</RouterLink>
-      <RouterLink to="/live-classes">Practice</RouterLink>
-      <RouterLink to="/events">Belong</RouterLink>
+    <nav class="hidden items-center gap-8 text-base font-medium text-ink md:flex">
+      <RouterLink to="/courses" class="hover:opacity-70" active-class="font-semibold">Courses</RouterLink>
+      <RouterLink to="/events" class="hover:opacity-70" active-class="font-semibold">Events</RouterLink>
+      <RouterLink to="/live-classes" class="hover:opacity-70" active-class="font-semibold">Speaking club</RouterLink>
+      <RouterLink to="/#about" class="hover:opacity-70">About us</RouterLink>
+    </nav>
 
+    <div class="flex items-center gap-3 text-sm">
       <template v-if="isLoggedIn">
-        <RouterLink to="/account">My Account</RouterLink>
-        <RouterLink v-if="role === 'admin'" to="/admin">Admin</RouterLink>
-        <button @click="logout" class="text-neutral-500 hover:text-neutral-900">
+        <RouterLink to="/account" class="hidden text-black/60 hover:text-ink sm:inline" active-class="text-ink font-medium">My Account</RouterLink>
+        <RouterLink v-if="role === 'admin'" to="/admin" class="hidden text-black/60 hover:text-ink sm:inline" active-class="text-ink font-medium">
+          Admin
+        </RouterLink>
+        <button @click="logout" class="text-black/60 hover:text-ink">
           Log out
         </button>
       </template>
       <template v-else>
-        <RouterLink to="/login">Log in</RouterLink>
+        <RouterLink
+          to="/signup"
+          class="rounded-full bg-red px-4 py-2 font-medium text-white transition hover:opacity-90"
+        >
+          Sign up
+        </RouterLink>
+        <RouterLink to="/login" class="hidden text-black/60 hover:text-ink sm:inline">
+          Log in
+        </RouterLink>
       </template>
-    </nav>
+    </div>
   </header>
 </template>

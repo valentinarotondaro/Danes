@@ -23,7 +23,7 @@ defineProps({
       <span class="inline-block rounded-full bg-sage/15 px-2.5 py-0.5 text-xs font-medium text-sage">
         Learn
       </span>
-      <h3 class="mt-2 font-serif text-lg text-neutral-900 group-hover:text-[#C8102E]">
+      <h3 class="mt-2 text-lg text-neutral-900 group-hover:text-[#C8102E]">
         {{ course.title }}
       </h3>
       <p class="mt-1 line-clamp-2 text-sm text-neutral-500">{{ course.description }}</p>

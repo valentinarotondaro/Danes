@@ -12,7 +12,7 @@ onMounted(fetchEvents)
 
 <template>
   <section class="mx-auto max-w-4xl px-6 py-12">
-    <h1 class="font-serif text-3xl text-neutral-900">Belong</h1>
+    <h1 class="text-3xl text-neutral-900">Belong</h1>
     <p class="mt-2 text-neutral-500">In-person community and cultural events — no video, just showing up.</p>
 
     <div class="mt-8">

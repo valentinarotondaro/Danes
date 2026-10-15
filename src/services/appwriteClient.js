@@ -25,7 +25,7 @@ export const COLLECTIONS = {
   LESSONS: 'lessons',
   LIVE_CLASSES: 'liveClasses',
   EVENTS: 'events',
-  BUNDLES: 'bundles',
+  PACKAGES: 'bundles', // Appwrite collection ID stayed "bundles" — only the display name changed to Packages
   ORDERS: 'orders',
 }
 

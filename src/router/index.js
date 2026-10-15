@@ -23,8 +23,8 @@ const routes = [
   // BELONG
   { path: '/events', name: 'event-list', component: () => import('@/views/EventListView.vue') },
 
-  // Bundles / commerce
-  { path: '/bundles/:id', name: 'bundle-detail', component: () => import('@/views/BundleDetailView.vue') },
+  // Packages / commerce (Appwrite collection ID is still "bundles" — see appwriteClient.js)
+  { path: '/packages/:id', name: 'package-detail', component: () => import('@/views/PackageDetailView.vue') },
   { path: '/checkout', name: 'checkout', component: () => import('@/views/CheckoutView.vue'), meta: { requiresAuth: true } },
   { path: '/account', name: 'my-account', component: () => import('@/views/MyAccountView.vue'), meta: { requiresAuth: true } },
 
@@ -49,8 +49,6 @@ const router = createRouter({
 router.beforeEach(async (to) => {
   const { isLoggedIn, isInitializing, role, initSession } = useAuth()
 
-  // Make sure the initial session check has resolved before guarding —
-  // otherwise a page refresh briefly looks "logged out" and bounces the user.
   if (isInitializing.value) {
     await initSession()
   }

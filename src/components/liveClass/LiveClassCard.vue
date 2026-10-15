@@ -20,12 +20,12 @@ function formatDate(iso) {
     <span class="inline-block rounded-full bg-dusty-blue/15 px-2.5 py-0.5 text-xs font-medium text-dusty-blue">
       Practice
     </span>
-    <h3 class="mt-2 font-serif text-lg text-neutral-900 group-hover:text-[#C8102E]">{{ liveClass.title }}</h3>
+    <h3 class="mt-2 text-lg text-neutral-900 group-hover:text-[#C8102E]">{{ liveClass.title }}</h3>
     <p class="mt-1 text-sm text-neutral-500">{{ formatDate(liveClass.dateTime) }}</p>
 
     <div class="mt-4 flex items-end justify-between border-t border-neutral-100 pt-4">
       <div>
-        <span class="font-serif text-2xl text-neutral-900">{{ liveClass.price }}</span>
+        <span class="text-2xl text-neutral-900">{{ liveClass.price }}</span>
         <span class="ml-1 text-sm text-neutral-500">DKK</span>
       </div>
       <span

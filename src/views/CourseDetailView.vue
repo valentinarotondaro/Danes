@@ -45,7 +45,7 @@ async function onPurchase() {
     <ErrorState v-else-if="error" :message="error" @retry="fetchCourse" />
 
     <template v-else-if="course">
-      <h1 class="font-serif text-3xl text-neutral-900">{{ course.title }}</h1>
+      <h1 class="text-3xl text-neutral-900">{{ course.title }}</h1>
       <p class="mt-3 text-neutral-600">{{ course.description }}</p>
       <p class="mt-4 text-lg font-medium text-neutral-900">{{ course.price }} DKK</p>
 
@@ -74,7 +74,7 @@ async function onPurchase() {
         </template>
       </div>
 
-      <h2 class="mt-10 font-serif text-xl text-neutral-900">Lessons</h2>
+      <h2 class="mt-10 text-xl text-neutral-900">Lessons</h2>
       <ul class="mt-4 divide-y divide-neutral-200 border-t border-neutral-200">
         <li v-for="lesson in lessons" :key="lesson.$id" class="flex items-center justify-between py-3">
           <div>

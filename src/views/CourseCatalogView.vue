@@ -14,7 +14,7 @@ onMounted(fetchCourses)
 <template>
   <div class="bg-cream">
     <section class="mx-auto max-w-5xl px-6 py-12">
-      <h1 class="font-serif text-3xl text-neutral-900">Learn</h1>
+      <h1 class="text-3xl text-neutral-900">Learn</h1>
       <p class="mt-2 text-neutral-500">
         Recorded courses organized by real-life situation — go at your own pace.
       </p>

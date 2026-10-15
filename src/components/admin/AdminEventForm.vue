@@ -15,8 +15,10 @@ const saving = ref(false)
 const submitError = ref('')
 const successMessage = ref('')
 
+const CITIES = ['Aarhus', 'Copenhagen', 'Odense', 'Esbjerg', 'Billund']
+
 const form = reactive({
-  title: '', description: '', location: '', dateTime: '', capacity: 20, published: false,
+  title: '', description: '', location: '', city: '', imageUrl: '', dateTime: '', capacity: 20, published: false,
 })
 const errors = reactive({ title: '', location: '', dateTime: '', capacity: '' })
 
@@ -70,7 +72,7 @@ onMounted(async () => {
 <template>
   <LoadingState v-if="loading" />
   <form v-else @submit.prevent="onSubmit">
-    <h1 class="font-serif text-2xl text-neutral-900">{{ isEditing ? 'Edit event' : 'New event' }}</h1>
+    <h1 class="text-2xl text-neutral-900">{{ isEditing ? 'Edit event' : 'New event' }}</h1>
     <div class="mt-6 space-y-4">
       <FormField v-model="form.title" label="Title" :error="errors.title" />
       <label class="block">
@@ -78,6 +80,14 @@ onMounted(async () => {
         <textarea v-model="form.description" rows="3" class="mt-1.5 w-full rounded-md border border-neutral-300 px-3 py-2 outline-none focus:border-[#C8102E]" />
       </label>
       <FormField v-model="form.location" label="Location" :error="errors.location" />
+      <label class="block">
+        <span class="text-sm text-neutral-700">City (for the "city walks" homepage section)</span>
+        <select v-model="form.city" class="mt-1.5 w-full rounded-md border border-neutral-300 px-3 py-2 outline-none focus:border-[#C8102E]">
+          <option value="">— None —</option>
+          <option v-for="c in CITIES" :key="c" :value="c">{{ c }}</option>
+        </select>
+      </label>
+      <FormField v-model="form.imageUrl" label="Image URL (for the homepage card)" />
       <label class="block">
         <span class="text-sm text-neutral-700">Date & time</span>
         <input

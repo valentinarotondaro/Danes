@@ -6,10 +6,13 @@ import FormField from '@/components/base/FormField.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import LoadingState from '@/components/base/LoadingState.vue'
 import AdminLessonManager from '@/components/admin/AdminLessonManager.vue'
+import { useTeachers } from '@/composables/useTeachers'
 
 const props = defineProps({ id: { type: String, default: null } })
 const isEditing = !!props.id
 const router = useRouter()
+const { teachers, fetchTeachers } = useTeachers()
+const LEVELS = ['A1', 'A2', 'B1']
 
 const loading = ref(isEditing)
 const saving = ref(false)
@@ -18,6 +21,7 @@ const successMessage = ref('')
 
 const form = reactive({
   title: '', slug: '', description: '', journeyTag: '', price: 0, thumbnailUrl: '', published: false,
+  level: '', teacherId: '', // v3
 })
 const errors = reactive({ title: '', slug: '', price: '' })
 
@@ -34,14 +38,18 @@ function validate() {
   errors.price = form.price >= 0 ? '' : 'Price must be 0 or more.'
   return !errors.title && !errors.slug && !errors.price
 }
-
 async function onSubmit() {
   submitError.value = ''
   successMessage.value = ''
   if (!validate()) return
   saving.value = true
   try {
-    const payload = { ...form, price: Number(form.price) }
+    const payload = {
+      ...form,
+      price: Number(form.price),
+      level: form.level || null,          // '' no es un nivel válido → null
+      teacherId: form.teacherId || null,
+    }
     if (isEditing) {
       await courseService.updateCourse(props.id, payload)
       successMessage.value = 'Course updated.'
@@ -57,9 +65,12 @@ async function onSubmit() {
 }
 
 onMounted(async () => {
+  fetchTeachers()
+
   if (isEditing) {
     try {
-      Object.assign(form, await courseService.getCourseById(props.id))
+      const doc = await courseService.getCourseById(props.id)
+      for (const key of Object.keys(form)) form[key] = doc[key] ?? form[key]
     } catch {
       submitError.value = 'Could not load this course.'
     } finally {
@@ -79,13 +90,29 @@ onMounted(async () => {
         <FormField v-model="form.slug" label="Slug" :error="errors.slug" />
         <label class="block">
           <span class="text-sm text-neutral-700">Description</span>
-          <textarea v-model="form.description" rows="3" class="mt-1.5 w-full rounded-md border border-neutral-300 px-3 py-2 outline-none focus:border-[#C8102E]" />
+          <textarea v-model="form.description" rows="3" class="mt-1.5 w-full rounded-ds border border-neutral-300 px-3 py-2 outline-none focus:border-red" />
         </label>
         <FormField v-model="form.journeyTag" label="Journey tag" />
+        <div class="grid gap-4 sm:grid-cols-2">
+  <label class="block">
+    <span class="text-sm text-neutral-700">Level</span>
+    <select v-model="form.level" class="mt-1.5 w-full rounded-ds border border-neutral-300 px-3 py-2 outline-none focus:border-red">
+      <option value="">No level</option>
+      <option v-for="lvl in LEVELS" :key="lvl" :value="lvl">{{ lvl }}</option>
+    </select>
+  </label>
+  <label class="block">
+    <span class="text-sm text-neutral-700">Teacher</span>
+    <select v-model="form.teacherId" class="mt-1.5 w-full rounded-ds border border-neutral-300 px-3 py-2 outline-none focus:border-red">
+      <option value="">No teacher yet</option>
+      <option v-for="t in teachers" :key="t.$id" :value="t.$id">{{ t.name }}</option>
+    </select>
+  </label>
+</div>
         <FormField v-model.number="form.price" label="Price (DKK)" type="number" :error="errors.price" />
         <FormField v-model="form.thumbnailUrl" label="Thumbnail URL" />
         <label class="flex items-center gap-2 text-sm text-neutral-700">
-          <input type="checkbox" v-model="form.published" class="h-4 w-4 accent-[#C8102E]" />
+          <input type="checkbox" v-model="form.published" class="h-4 w-4 accent-red" />
           Published
         </label>
       </div>

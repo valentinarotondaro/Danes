@@ -33,8 +33,4 @@ export async function deleteEvent(id) {
   return databases.deleteDocument(DB_ID, COLLECTIONS.EVENTS, id)
 }
 
-export async function incrementSpotsBooked(id, currentSpotsBooked) {
-  return databases.updateDocument(DB_ID, COLLECTIONS.EVENTS, id, {
-    spotsBooked: (currentSpotsBooked ?? 0) + 1,
-  })
-}
+

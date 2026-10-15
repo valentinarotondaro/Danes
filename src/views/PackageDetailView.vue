@@ -23,7 +23,7 @@ async function checkAccess() {
   if (!isLoggedIn.value) return
   checking.value = true
   try {
-    hasAccess.value = await orderService.hasConfirmedOrder(currentUser.value.$id, 'package', id)
+    hasAccess.value = await orderService.hasConfirmedOrder(currentUser.value.$id, 'bundle', id)
   } finally {
     checking.value = false
   }

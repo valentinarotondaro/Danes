@@ -4,6 +4,7 @@ import { useAuth } from '@/composables/useAuth'
 import * as orderService from '@/services/orderService'
 import * as liveClassService from '@/services/liveClassService'
 import * as eventService from '@/services/eventService'
+import { reserveSpot } from '@/services/spotService'
 
 export function useOrders() {
   const { currentUser } = useAuth()
@@ -24,23 +25,14 @@ export function useOrders() {
     }
   }
 
-  // Books a live class: creates the order, then increments the class's
-  // denormalized spotsBooked counter. Capacity is re-checked here (not just
-  // in the UI) so two users clicking "Book" near-simultaneously can't both
-  // slip past a client-side-only check — though a true atomic increment
-  // would need a server-side Appwrite Function; documented as a V2 item
-  // alongside the other capacity/race-condition tradeoffs at this scale.
+  // Books a live class through the reserve-spot server function: it checks
+  // capacity, adds +1 in one atomic step and creates the order.
+  // Returns { status, spotsBooked }.
   async function bookLiveClass(liveClass) {
     purchasing.value = true
     error.value = null
     try {
-      const fresh = await liveClassService.getLiveClassById(liveClass.$id)
-      if ((fresh.spotsBooked ?? 0) >= fresh.capacity) {
-        throw new Error('This class is fully booked.')
-      }
-      const order = await orderService.createOrder(currentUser.value.$id, 'liveClass', liveClass.$id, fresh.price)
-      await liveClassService.incrementSpotsBooked(liveClass.$id, fresh.spotsBooked)
-      return order
+      return await reserveSpot('liveClass', liveClass.$id)
     } catch (err) {
       error.value = err.message
       throw err
@@ -80,16 +72,9 @@ export function useOrders() {
       if (bundle.courseId) {
         await orderService.createOrder(currentUser.value.$id, 'course', bundle.courseId, 0)
       }
-      if (bundle.liveClassId) {
-        const fresh = await liveClassService.getLiveClassById(bundle.liveClassId)
-        await orderService.createOrder(currentUser.value.$id, 'liveClass', bundle.liveClassId, 0)
-        await liveClassService.incrementSpotsBooked(bundle.liveClassId, fresh.spotsBooked)
-      }
-      if (bundle.eventId) {
-        const fresh = await eventService.getEventById(bundle.eventId)
-        await orderService.createOrder(currentUser.value.$id, 'event', bundle.eventId, 0)
-        await eventService.incrementSpotsBooked(bundle.eventId, fresh.spotsBooked)
-      }
+      // Spots go through the server function, which checks the package order exists
+      if (bundle.liveClassId) await reserveSpot('liveClass', bundle.liveClassId, bundle.$id)
+      if (bundle.eventId) await reserveSpot('event', bundle.eventId, bundle.$id)
 
       return bundleOrder
     } catch (err) {

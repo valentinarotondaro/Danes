@@ -39,9 +39,9 @@ async function checkBooking() {
 async function onBook() {
   bookingError.value = ''
   try {
-    await bookLiveClass(liveClass.value)
+        const { spotsBooked } = await bookLiveClass(liveClass.value)
     hasBooked.value = true
-    liveClass.value.spotsBooked = (liveClass.value.spotsBooked ?? 0) + 1
+    liveClass.value.spotsBooked = spotsBooked
   } catch (err) {
     bookingError.value = err.message || 'Could not complete the booking.'
   }

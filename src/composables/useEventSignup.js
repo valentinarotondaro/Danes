@@ -35,8 +35,8 @@ export function useEventSignup(event) {
   async function saveSpot() {
     if (!requireLogin()) return
     try {
-      await rsvp(event.value)
-      event.value.spotsBooked = spotsBooked.value + 1
+       const { spotsBooked: newCount } = await rsvp(event.value)
+      event.value.spotsBooked = newCount // the real number from the server
     } catch {
       // message is in `error`
     }

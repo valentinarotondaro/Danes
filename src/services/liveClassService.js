@@ -33,10 +33,4 @@ export async function deleteLiveClass(id) {
   return databases.deleteDocument(DB_ID, COLLECTIONS.LIVE_CLASSES, id)
 }
 
-// Denormalized counter — see spotsBooked note in the provisioning script.
-// Read-then-write; acceptable race-condition risk at this project's scale.
-export async function incrementSpotsBooked(id, currentSpotsBooked) {
-  return databases.updateDocument(DB_ID, COLLECTIONS.LIVE_CLASSES, id, {
-    spotsBooked: (currentSpotsBooked ?? 0) + 1,
-  })
-}
+

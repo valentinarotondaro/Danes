@@ -1,6 +1,6 @@
 <script setup>
 import { STEPS } from './homeContent'
-import flagImg from '@/assets/img/danish-flag.avif'
+  import flagImg from '@/assets/img/danish-flag.jpg'
 </script>
 
 <template>

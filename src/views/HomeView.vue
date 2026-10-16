@@ -4,7 +4,7 @@
 import HomeHero from '@/components/home/HomeHero.vue'
 import HomeCourses from '@/components/home/HomeCourses.vue'
 import HomeHowItWorks from '@/components/home/HomeHowItWorks.vue'
-import HomeLevelTest from '@/components/home/HomeLevelTest.vue'
+import LevelTestBanner from '@/components/base/LevelTestBanner.vue'
 import HomeValues from '@/components/home/HomeValues.vue'
 import HomeCityWalks from '@/components/home/HomeCityWalks.vue'
 import HomeReviews from '@/components/home/HomeReviews.vue'
@@ -18,7 +18,7 @@ import { FAQ } from '@/components/home/homeContent'
     <HomeHero />
     <HomeCourses />
     <HomeHowItWorks />
-    <HomeLevelTest />
+    <LevelTestBanner />
     <HomeValues />
     <HomeCityWalks />
     <HomeReviews />

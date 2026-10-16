@@ -1,17 +1,25 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import { useCourses } from '@/composables/useCourses'
+import CoursesHero from '@/components/course/CoursesHero.vue'
 import CourseGrid from '@/components/course/CourseGrid.vue'
+import CoursesIncluded from '@/components/course/CoursesIncluded.vue'
+import CoursesPath from '@/components/course/CoursesPath.vue'
+import FilterChips from '@/components/base/FilterChips.vue'
+import PlanCards from '@/components/base/PlanCards.vue'
+import LevelTestBanner from '@/components/base/LevelTestBanner.vue'
+import FaqList from '@/components/base/FaqList.vue'
 import LoadingState from '@/components/base/LoadingState.vue'
 import ErrorState from '@/components/base/ErrorState.vue'
 import EmptyState from '@/components/base/EmptyState.vue'
+import { LEVEL_FILTERS, PLANS, FAQ } from '@/components/course/coursesContent'
 
 const { courses, loading, error, fetchCourses } = useCourses()
 
-const LEVELS = ['All', 'A1', 'A2', 'B1']
 const selectedLevel = ref('All')
 
-// Se recalcula sola cada vez que cambian los cursos o el filtro
+// Recalculates by itself whenever the courses or the filter change
 const visibleCourses = computed(() =>
   selectedLevel.value === 'All'
     ? courses.value
@@ -22,32 +30,17 @@ onMounted(fetchCourses)
 </script>
 
 <template>
-  <section class="mx-auto max-w-[1200px] px-4 py-16 sm:px-10 sm:py-20">
-    <header class="flex flex-col gap-4">
-      <span class="text-sm font-semibold uppercase tracking-wide text-red">Learn it</span>
-      <h1 class="text-[40px] font-semibold leading-[1.1] text-ink sm:text-[56px]">Courses</h1>
-      <p class="max-w-xl text-lg text-ink-muted">
-        Self-paced video lessons from A1 to B1. Each one is a real situation, start to finish.
-      </p>
-    </header>
+  <div class="mx-auto flex max-w-[1200px] flex-col gap-[72px] px-4 py-10 sm:gap-[120px] sm:px-10 sm:py-16">
+    <CoursesHero :courses="courses" />
 
-    <div role="group" aria-label="Filter by level" class="mt-10 flex flex-wrap gap-2">
-      <button
-        v-for="lvl in LEVELS"
-        :key="lvl"
-        type="button"
-        :aria-pressed="selectedLevel === lvl"
-        class="rounded-ds border px-4 py-2 text-sm font-semibold transition-colors"
-        :class="selectedLevel === lvl
-          ? 'border-ink bg-ink text-white'
-          : 'border-line bg-white text-ink hover:border-ink'"
-        @click="selectedLevel = lvl"
-      >
-        {{ lvl }}
-      </button>
-    </div>
+    <section id="catalog" class="flex flex-col gap-8">
+      <div class="flex flex-col gap-2">
+        <h2 class="text-[40px] font-semibold leading-[1.1] text-ink sm:text-[56px]">All courses</h2>
+        <p class="text-ink-muted">Pick by level, or by what you need Danish for right now.</p>
+      </div>
 
-    <div class="mt-10">
+      <FilterChips v-model="selectedLevel" :options="LEVEL_FILTERS" label="Filter by level" />
+
       <LoadingState v-if="loading" label="Loading courses…" />
       <ErrorState v-else-if="error" :message="error" @retry="fetchCourses" />
       <EmptyState
@@ -56,16 +49,37 @@ onMounted(fetchCourses)
         description="Try another level, or check back soon."
       />
       <CourseGrid v-else :courses="visibleCourses" />
-    </div>
+    </section>
 
-    <aside class="mt-20 flex flex-col gap-6 rounded-ds bg-sky p-8 sm:flex-row sm:items-center sm:p-12">
-      <div class="flex-1">
-        <h2 class="text-[32px] font-semibold leading-tight text-ink">Not sure about your level?</h2>
-        <p class="mt-2 text-ink">Take the 5-minute test and we’ll point you to the right course.</p>
+    <CoursesIncluded />
+    <CoursesPath />
+
+    <section id="plans" class="flex flex-col gap-8">
+      <div class="flex flex-col gap-2">
+        <h2 class="text-[40px] font-semibold leading-[1.1] text-ink sm:text-[56px]">Choose your plan</h2>
+        <p class="text-ink-muted">Monthly, no binding. Pause or cancel from your account any time.</p>
       </div>
-      <RouterLink to="/level-test" class="rounded-ds bg-red px-6 py-3 font-semibold text-white no-underline hover:bg-red-hover">
-        Start the level test
-      </RouterLink>
-    </aside>
-  </section>
+      <PlanCards :plans="PLANS" />
+      <p class="text-sm text-ink-muted">
+        Only want to practise speaking? The Social plan (Speaking Club + events) is 329 kr./month.
+        <RouterLink to="/live-classes" class="font-semibold text-ink">See the Speaking Club</RouterLink>
+      </p>
+    </section>
+
+    <LevelTestBanner
+      title="Not sure which course?"
+      text="The level test tells you where you are and which course to start with."
+    />
+
+    <section id="faq" class="flex flex-col gap-6 lg:flex-row">
+      <div class="flex flex-col gap-2 lg:w-1/3">
+        <span class="text-xs font-semibold uppercase tracking-wide text-red">FAQ</span>
+        <h2 class="text-[40px] font-semibold leading-[1.1] text-ink sm:text-[56px]">About the courses</h2>
+        <p class="text-ink-muted">Write to contact@danes.dk if you don’t find your answer here.</p>
+      </div>
+      <div class="lg:flex-1">
+        <FaqList :items="FAQ" />
+      </div>
+    </section>
+  </div>
 </template>

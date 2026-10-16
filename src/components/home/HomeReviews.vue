@@ -14,9 +14,7 @@ import logo from '@/assets/img/danes-logo.png'
         <p class="text-lg leading-none text-red" role="img" aria-label="5 out of 5 stars">★★★★★</p>
         <blockquote class="m-0 text-ink">“{{ review.quote }}”</blockquote>
         <figcaption class="mt-auto flex items-center gap-3">
-          <span aria-hidden="true" class="flex h-12 w-12 items-center justify-center rounded-full bg-sky-strong font-semibold text-ink">
-            {{ review.name[0] }}
-          </span>
+          <img :src="review.photo" alt="" class="h-12 w-12 rounded-full object-cover" />
           <span class="flex flex-col">
             <span class="text-sm font-semibold text-ink">{{ review.name }}</span>
             <span class="text-sm text-ink-muted">{{ review.from }}</span>

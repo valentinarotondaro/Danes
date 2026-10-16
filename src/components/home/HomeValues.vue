@@ -1,12 +1,13 @@
 <script setup>
 import { VALUES } from './homeContent'
 import logo from '@/assets/img/danes-logo.png'
-import valuesImg from '@/assets/img/danes-smiles.avif'
+import CoverPhoto from '@/components/base/CoverPhoto.vue'
+import valuesImg from '@/assets/img/friends-sky.jpg'
 </script>
 
 <template>
   <section id="values" class="flex flex-col gap-6 rounded-ds bg-red p-6 text-white sm:p-10 lg:flex-row">
-    <div class="flex flex-1 flex-col justify-center gap-6">
+    <div class="flex flex-col justify-center gap-6 lg:min-w-0 lg:flex-1 lg:basis-0">
       <span class="text-xs font-semibold uppercase tracking-wide">Our values</span>
       <h2 class="max-w-[520px] text-[40px] font-semibold leading-[1.1] sm:text-[56px]">
         At
@@ -20,10 +21,6 @@ import valuesImg from '@/assets/img/danes-smiles.avif'
         </li>
       </ul>
     </div>
-    <img
-      :src="valuesImg"
-      alt="Friends laughing together"
-      class="max-h-[440px] min-h-[300px] w-full flex-1 rounded-ds object-cover lg:min-h-[360px] lg:w-auto"
-    />
+    <CoverPhoto :src="valuesImg" alt="Friends looking down into the camera against a blue sky" />
   </section>
 </template>

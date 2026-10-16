@@ -4,8 +4,15 @@
 // templates stay short and the text is easy to edit in one place.
 // Real data (courses, events) comes from Appwrite, not from here.
 
-export const LEARNERS = [{ name: 'Sofia' }, { name: 'Tomas' }, { name: 'Galina' }]
+import sofia from '@/assets/img/avatar-sofia.jpg'
+import tomas from '@/assets/img/avatar-tomas.jpg'
+import galina from '@/assets/img/avatar-galina.jpg'
 
+export const LEARNERS = [
+  { name: 'Sofia', photo: sofia },
+  { name: 'Tomas', photo: tomas },
+  { name: 'Galina', photo: galina },
+]
 export const STEPS = [
   { n: 1, tone: 'sky', title: 'Discover your Danish level', text: 'A free 15-minute placement test shows your level, your strengths and exactly where to start.' },
   { n: 2, tone: 'red', title: 'Explore our courses', text: 'Self-paced lessons for everyday life: the bakery, the bus, the doctor and your first brev.' },
@@ -16,9 +23,9 @@ export const STEPS = [
 export const VALUES = ['Community', 'Confidence', 'Support', 'Belonging', 'Opportunities', 'Motivation']
 
 export const REVIEWS = [
-  { quote: 'I went from panicking at Netto to actually chatting with the cashier. The Speaking Club made the difference.', name: 'Sofia', from: 'Argentina' },
-  { quote: 'Recorded lessons meant I could study around night shifts. My CPR appointment last week was fully in Danish.', name: 'Tomas', from: 'Colombia' },
-  { quote: 'My teacher understood exactly what expat life needed: job Danish, not just textbook Danish.', name: 'Galina', from: 'Ukraine' },
+  { quote: 'I went from panicking at Netto to actually chatting with the cashier. The Speaking Club made the difference.', name: 'Sofia', from: 'Argentina', photo: sofia },
+  { quote: 'Recorded lessons meant I could study around night shifts. My CPR appointment last week was fully in Danish.', name: 'Tomas', from: 'Colombia', photo: tomas },
+  { quote: 'My teacher understood exactly what expat life needed: job Danish, not just textbook Danish.', name: 'Galina', from: 'Ukraine', photo: galina },
 ]
 
 export const FAQ = [

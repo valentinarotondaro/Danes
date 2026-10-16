@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useAuth } from '@/composables/useAuth'
-import friendsImg from '@/assets/img/danes-smiles.avif'
+import friendsImg from '@/assets/img/speaking-group.jpg'
 
 const { currentUser } = useAuth()
 const copied = ref(false)
@@ -43,6 +43,6 @@ async function copyLink() {
       </div>
       <p class="sr-only" role="status">{{ copied ? 'Link copied' : '' }}</p>
     </div>
-    <img :src="friendsImg" alt="Friends laughing together" class="max-h-[420px] min-h-[300px] w-full flex-1 rounded-ds object-cover lg:w-auto" />
+    <img :src="friendsImg" alt="Four friends taking a selfie outside a bageri" class="max-h-[420px] min-h-[300px] w-full flex-1 rounded-ds object-cover lg:w-auto" />
   </section>
 </template>

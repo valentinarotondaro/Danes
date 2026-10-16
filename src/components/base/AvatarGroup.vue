@@ -7,7 +7,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="inline-flex items-center gap-1">
+  <div class="inline-flex  shrink-0  items-center gap-1">
     <template v-for="person in people" :key="person.name">
       <img v-if="person.photo" :src="person.photo" :alt="person.name" class="h-10 w-10 rounded-full object-cover" />
       <span

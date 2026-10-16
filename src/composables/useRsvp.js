@@ -1,15 +1,16 @@
 // src/composables/useRsvp.js
 //
-// Event sign-up logic: RSVP when there's a spot, join the waitlist when it's full.
-// The status lives in `orders` (itemType 'event'): 'confirmed' = going,
-// 'waitlist' = waiting. No separate waitlist collection — see data-model.md.
+// Sign-up logic for anything with seats: RSVP when there's a spot, join the
+// waitlist when it's full. itemType is 'event' (default) or 'liveClass'.
+// The status lives in `orders`: 'confirmed' = going, 'waitlist' = waiting.
+// No separate waitlist collection — see data-model.md.
 
 import { computed, ref } from 'vue'
 import { useAuth } from '@/composables/useAuth'
 import * as orderService from '@/services/orderService'
 import { reserveSpot } from '@/services/spotService'
 
-export function useRsvp() {
+export function useRsvp(itemType = 'event') {
   const { currentUser, isLoggedIn } = useAuth()
   const status = ref(null) // null | 'confirmed' | 'waitlist'
   const checking = ref(false)
@@ -19,25 +20,25 @@ export function useRsvp() {
   const hasRsvpd = computed(() => status.value === 'confirmed')
   const isWaitlisted = computed(() => status.value === 'waitlist')
 
-  async function checkRsvp(eventId) {
+  async function checkRsvp(itemId) {
     if (!isLoggedIn.value) {
       status.value = null
       return
     }
     checking.value = true
     try {
-      status.value = await orderService.getOrderStatus(currentUser.value.$id, 'event', eventId)
+      status.value = await orderService.getOrderStatus(currentUser.value.$id, itemType, itemId)
     } finally {
       checking.value = false
     }
   }
 
   // The server function checks capacity and adds +1. Returns { spotsBooked }.
-  async function rsvp(event) {
+  async function rsvp(item) {
     rsvping.value = true
     error.value = null
     try {
-      const result = await reserveSpot('event', event.$id)
+      const result = await reserveSpot(itemType, item.$id)
       status.value = 'confirmed'
       return result
     } catch (err) {
@@ -48,11 +49,11 @@ export function useRsvp() {
     }
   }
 
-  async function joinWaitlist(event) {
+  async function joinWaitlist(item) {
     rsvping.value = true
     error.value = null
     try {
-      await orderService.createOrder(currentUser.value.$id, 'event', event.$id, 0, 'waitlist')
+      await orderService.createOrder(currentUser.value.$id, itemType, item.$id, 0, 'waitlist')
       status.value = 'waitlist'
     } catch (err) {
       error.value = err.message

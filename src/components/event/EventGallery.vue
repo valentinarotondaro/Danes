@@ -1,14 +1,17 @@
 <script setup>
-import danesSmiles from '@/assets/img/danes-smiles.avif'
-import heroCyclists from '@/assets/img/hero-cyclists.png'
+import friendsSky from '@/assets/img/friends-sky.jpg'
+import bakery from '@/assets/img/bakery.jpg'
+import cafeLetter from '@/assets/img/cafe-letter.jpg'
+import selfie from '@/assets/img/speaking-group.jpg'
+import friendsStreet from '@/assets/img/friends-street.jpg'
 
 // Photos from past events. Big one first, then four small ones.
 const photos = [
-  { src: danesSmiles, alt: 'Learners laughing together on a city street', caption: 'Hygge night · Esbjerg' },
-  { src: '/img/aarhus-la-cabra.jpg', alt: 'Baristas at La Cabra coffee in Aarhus', caption: 'La Cabra · Aarhus' },
-  { src: '/img/copenhagen-druk.avif', alt: 'Still from the film Druk', caption: 'Film night' },
-  { src: '/img/billund-legohouse.jpg', alt: 'LEGO House in Billund seen from above', caption: 'LEGO House' },
-  { src: heroCyclists, alt: 'Friends with bikes on a Danish street', caption: 'City walk' },
+  { src: friendsSky, alt: 'Friends looking down into the camera against a blue sky', caption: 'Summer picnic · Aarhus' },
+  { src: bakery, alt: 'A learner ordering pastries in a bakery', caption: 'Bageri morning' },
+  { src: cafeLetter, alt: 'Two learners laughing over a letter in a café', caption: 'Café Danish' },
+  { src: selfie, alt: 'Four friends taking a selfie outside a bageri', caption: 'Selfie stop' },
+  { src: friendsStreet, alt: 'Friends hugging on a colourful street', caption: 'Hygge night' },
 ]
 </script>
 

@@ -2,8 +2,8 @@
 import { RouterLink } from 'vue-router'
 import AvatarGroup from '@/components/base/AvatarGroup.vue'
 import { LEARNERS } from './homeContent'
-import heroImg from '@/assets/img/danes-smiles.avif'
-</script>
+import heroImg from '@/assets/img/friends-street.jpg'
+  </script>
 
 <template>
   <section id="top" class="flex flex-col overflow-hidden rounded-ds bg-sky lg:flex-row">

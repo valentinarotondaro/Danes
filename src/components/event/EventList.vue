@@ -1,5 +1,5 @@
 <script setup>
-import EventCard from './EventCard.vue'
+  import heroImg from '@/assets/img/friends-street.jpg'
 
 defineProps({ events: { type: Array, required: true } })
 </script>

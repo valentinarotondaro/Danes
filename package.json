@@ -9,8 +9,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "provision": "node scripts/provision-appwrite.mjs",
-    "seed:city-walks": "node scripts/seed-city-walks.mjs"
-  },
+   "seed:events": "node scripts/seed-events.mjs"  },
+  "seed:sessions": "node scripts/seed-sessions.mjs",
   "dependencies": {
     "appwrite": "^26.2.0",
     "vue": "^3.5.41",

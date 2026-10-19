@@ -14,7 +14,7 @@ export const LEARNERS = [
   { name: 'Galina', photo: galina },
 ]
 export const STEPS = [
-  { n: 1, tone: 'sky', title: 'Discover your Danish level', text: 'A free 15-minute placement test shows your level, your strengths and exactly where to start.' },
+  { n: 1, tone: 'sky', title: 'Discover your Danish level', text: 'A free 5-minute placement test shows your level, your strengths and exactly where to start.' },
   { n: 2, tone: 'red', title: 'Explore our courses', text: 'Self-paced lessons for everyday life: the bakery, the bus, the doctor and your first brev.' },
   { n: 3, tone: 'sky', title: 'Join the Speaking Club', text: 'A weekly video hangout where you practise out loud with other learners and native speakers.' },
   { n: 4, tone: 'red', title: 'Come to our events', text: 'Julefrokost, hygge nights and city walks with your class. New DANES events every month.' },

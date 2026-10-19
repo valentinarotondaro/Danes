@@ -1,6 +1,6 @@
 <script setup>
 import { reactive, ref } from 'vue'
-import { useRouter, RouterLink } from 'vue-router'
+import { useRouter, useRoute, RouterLink } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import AuthBrandPanel from '@/components/layout/AuthBrandPanel.vue'
 import FormField from '@/components/base/FormField.vue'
@@ -8,6 +8,7 @@ import BaseButton from '@/components/base/BaseButton.vue'
 
 const { signup } = useAuth()
 const router = useRouter()
+const route = useRoute()
 
 const form = reactive({ name: '', email: '', password: '' })
 const errors = reactive({ name: '', email: '', password: '' })
@@ -28,7 +29,7 @@ async function onSubmit() {
   loading.value = true
   try {
     await signup(form.email, form.password, form.name)
-    router.push({ name: 'home' })
+    router.push(route.query.redirect || { name: 'home' })
   } catch (err) {
     submitError.value = 'Could not create your account. That email may already be in use.'
   } finally {

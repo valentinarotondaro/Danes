@@ -68,7 +68,7 @@ const percentTaken = computed(() =>
             @waitlist="waitlist"
           />
         </div>
-        <a href="#invite" class="font-semibold text-white hover:text-sky">Invite a friend</a>
+                <RouterLink :to="{ name: 'event-detail', params: { id: event.$id } }" class="font-semibold text-white hover:text-sky">See details</RouterLink>
       </div>
       <p v-if="error" role="alert" class="text-sm font-semibold">{{ error }}</p>
     </div>

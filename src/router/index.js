@@ -16,12 +16,19 @@ const routes = [
   { path: '/courses/:id', name: 'course-detail', component: () => import('@/views/CourseDetailView.vue') },
   { path: '/courses/:courseId/lessons/:lessonId', name: 'lesson', component: () => import('@/views/LessonView.vue'), meta: { requiresAuth: true } },
 
+  // Level test: full screen, without the site header and footer (meta.focus)
+  { path: '/level-test', name: 'level-test', component: () => import('@/views/LevelTestView.vue'), meta: { focus: true } },
+
   // PRACTICE
   { path: '/live-classes', name: 'live-class-list', component: () => import('@/views/LiveClassListView.vue') },
   { path: '/live-classes/:id', name: 'live-class-detail', component: () => import('@/views/LiveClassDetailView.vue') },
 
   // BELONG
   { path: '/events', name: 'event-list', component: () => import('@/views/EventListView.vue') },
+  { path: '/events/:id', name: 'event-detail', component: () => import('@/views/EventDetailView.vue') }, // NEW
+
+  // ABOUT
+  { path: '/about', name: 'about', component: () => import('@/views/AboutView.vue') },
 
   // Packages / commerce (Appwrite collection ID is still "bundles" — see appwriteClient.js)
   { path: '/packages/:id', name: 'package-detail', component: () => import('@/views/PackageDetailView.vue') },
@@ -42,6 +49,11 @@ const routes = [
 ]
 
 const router = createRouter({
+  // NEW: a new page starts at the top; a #hash scrolls to that section
+  scrollBehavior(to) {
+    if (to.hash) return { el: to.hash, behavior: 'smooth' }
+    return { top: 0 }
+  },
   history: createWebHistory(),
   routes,
 })

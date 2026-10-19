@@ -22,7 +22,7 @@ import heroImg from '@/assets/img/friends-street.jpg'
         <span class="text-sm text-ink">learners already speaking</span>
       </div>
       <div class="flex flex-col gap-4 sm:flex-row">
-        <RouterLink to="/signup" class="rounded-ds bg-red px-6 py-3 text-center font-semibold text-white no-underline hover:bg-red-hover sm:w-60">
+        <RouterLink to="/level-test" class="rounded-ds bg-red px-6 py-3 text-center font-semibold text-white no-underline hover:bg-red-hover sm:w-60">
           Start the level test
         </RouterLink>
         <a href="#how" class="rounded-ds bg-white px-6 py-3 text-center font-semibold text-ink no-underline hover:bg-sky-soft sm:w-60">

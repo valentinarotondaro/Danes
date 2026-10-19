@@ -2,6 +2,7 @@
 import { toRef } from 'vue'
 import { useEventSignup } from '@/composables/useEventSignup'
 import RsvpButton from './RsvpButton.vue'
+import { RouterLink } from 'vue-router' 
 
 const props = defineProps({ event: { type: Object, required: true } })
 
@@ -29,7 +30,11 @@ const { spotsBooked, isFull, spotsLeft, month, day, when, hasRsvpd, isWaitlisted
       <span v-if="event.city" class="self-start rounded-ds bg-sky-soft px-3 py-1 text-xs font-semibold uppercase tracking-wide text-ink">
         {{ event.city }}
       </span>
-      <h3 class="text-2xl font-semibold leading-tight text-ink">{{ event.title }}</h3>
+            <h3 class="text-2xl font-semibold leading-tight text-ink">
+        <RouterLink :to="{ name: 'event-detail', params: { id: event.$id } }" class="text-ink no-underline hover:text-red">
+          {{ event.title }}
+        </RouterLink>
+      </h3>
       <p class="text-sm font-semibold text-ink">{{ when }} · {{ event.location }}</p>
 
       <div class="flex items-center justify-between gap-3">

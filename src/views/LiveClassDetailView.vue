@@ -1,99 +1,31 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
-import { useRoute, RouterLink } from 'vue-router'
+import { computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { useLiveClass } from '@/composables/useLiveClasses'
-import { useOrders } from '@/composables/useOrders'
-import { useAuth } from '@/composables/useAuth'
-import * as orderService from '@/services/orderService'
+import { useTeachers } from '@/composables/useTeachers'
+import { parsePipeList } from '@/utils/pipeList'
+import SessionLobby from '@/components/session/SessionLobby.vue'
 import LoadingState from '@/components/base/LoadingState.vue'
 import ErrorState from '@/components/base/ErrorState.vue'
-import BaseButton from '@/components/base/BaseButton.vue'
-import VideoRoomEmbed from '@/components/liveClass/VideoRoomEmbed.vue'
 
 const route = useRoute()
-const id = route.params.id
+const { liveClass, loading, error, fetchLiveClass } = useLiveClass(route.params.id)
+const { teacher: host, fetchTeacher } = useTeachers()
 
-const { liveClass, loading, error, fetchLiveClass } = useLiveClass(id)
-const { purchasing, bookLiveClass } = useOrders()
-const { currentUser, isLoggedIn } = useAuth()
-
-const hasBooked = ref(false)
-const checkingBooking = ref(false)
-const bookingError = ref('')
-const showRoom = ref(false)
-
-const spotsLeft = computed(() =>
-  liveClass.value ? Math.max(liveClass.value.capacity - (liveClass.value.spotsBooked ?? 0), 0) : 0
-)
-
-async function checkBooking() {
-  if (!isLoggedIn.value) return
-  checkingBooking.value = true
-  try {
-    hasBooked.value = await orderService.hasConfirmedOrder(currentUser.value.$id, 'liveClass', id)
-  } finally {
-    checkingBooking.value = false
-  }
-}
-
-async function onBook() {
-  bookingError.value = ''
-  try {
-        const { spotsBooked } = await bookLiveClass(liveClass.value)
-    hasBooked.value = true
-    liveClass.value.spotsBooked = spotsBooked
-  } catch (err) {
-    bookingError.value = err.message || 'Could not complete the booking.'
-  }
-}
+const topics = computed(() => liveClass.value?.topics ?? [])
+// "en recept | a prescription" → { da, en } (see utils/pipeList.js)
+const words = computed(() => parsePipeList(liveClass.value?.words, ['da', 'en']))
 
 onMounted(async () => {
   await fetchLiveClass()
-  await checkBooking()
+  fetchTeacher(liveClass.value?.teacherId) // no await: the page doesn't wait for the host
 })
 </script>
 
 <template>
-  <section class="mx-auto max-w-3xl px-6 py-12">
-    <LoadingState v-if="loading" label="Loading class…" />
+  <div class="mx-auto flex max-w-[1200px] flex-col gap-12 px-4 py-10 sm:gap-[72px] sm:px-10 sm:py-16">
+    <LoadingState v-if="loading" label="Loading session…" />
     <ErrorState v-else-if="error" :message="error" @retry="fetchLiveClass" />
-
-    <template v-else-if="liveClass">
-      <h1 class="text-3xl text-neutral-900">{{ liveClass.title }}</h1>
-      <p class="mt-2 text-neutral-500">
-        {{ new Date(liveClass.dateTime).toLocaleString(undefined, { dateStyle: 'full', timeStyle: 'short' }) }}
-      </p>
-      <p class="mt-4 text-lg font-medium text-neutral-900">{{ liveClass.price }} DKK</p>
-
-      <div class="mt-6">
-        <template v-if="!isLoggedIn">
-          <p class="text-sm text-neutral-500">
-            <RouterLink :to="{ name: 'login', query: { redirect: route.fullPath } }" class="text-[#C8102E] hover:underline">
-              Log in
-            </RouterLink>
-            to book this class.
-          </p>
-        </template>
-        <template v-else-if="checkingBooking">
-          <p class="text-sm text-neutral-500">Checking your booking…</p>
-        </template>
-        <template v-else-if="hasBooked">
-          <p class="text-sm font-medium text-green-700">You're booked in.</p>
-          <BaseButton v-if="!showRoom" @click="showRoom = true" class="mt-3 max-w-xs">
-            Join video call
-          </BaseButton>
-        </template>
-        <template v-else>
-          <BaseButton :loading="purchasing" :disabled="spotsLeft === 0" @click="onBook" class="max-w-xs">
-            {{ spotsLeft === 0 ? 'Fully booked' : `Book — ${liveClass.price} DKK` }}
-          </BaseButton>
-          <p v-if="bookingError" class="mt-2 text-sm text-red-600">{{ bookingError }}</p>
-        </template>
-      </div>
-
-      <div v-if="showRoom" class="mt-8">
-        <VideoRoomEmbed :live-class-id="id" />
-      </div>
-    </template>
-  </section>
+    <SessionLobby v-else-if="liveClass" :session="liveClass" :host="host" :topics="topics" :words="words" />
+  </div>
 </template>

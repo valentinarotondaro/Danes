@@ -12,6 +12,7 @@ export const LEARNERS = [
   { name: 'Tomas', photo: tomas },
   { name: 'Galina', photo: galina },
 ]
+
 export const LEVEL_FILTERS = [
   { value: 'all', label: 'All levels' },
   { value: 'beginner', label: 'A1–A2' },

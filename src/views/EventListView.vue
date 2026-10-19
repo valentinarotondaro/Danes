@@ -11,8 +11,7 @@ import FaqList from '@/components/base/FaqList.vue'
 import LoadingState from '@/components/base/LoadingState.vue'
 import ErrorState from '@/components/base/ErrorState.vue'
 import EmptyState from '@/components/base/EmptyState.vue'
-import heroImg from '@/assets/img/danes-smiles.avif'
-
+import heroImg from '@/assets/img/friends-street.jpg'
 const { events, loading, error, fetchEvents } = useEvents()
 
 // Events come sorted by date from the service, so the first one is the next one

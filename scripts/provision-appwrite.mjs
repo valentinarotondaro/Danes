@@ -9,6 +9,12 @@
 // attributes and collections, and widens the orders.status enum. Existing
 // documents keep working. Every v3 line is marked with "v3".
 //
+// v4 (Oct 2026, event detail page) is additive too: five optional fields on
+// events (duration, meeting point, host, agenda, words). Marked with "v4".
+//
+// v5 (Oct 2026, Speaking Club session lobby) adds three optional fields on
+// liveClasses (duration, topics, words). Marked with "v5".
+//
 // Run once with: npm run provision
 // Safe to re-run — every create call is wrapped so "already exists" errors
 // are skipped instead of crashing the script.
@@ -194,7 +200,11 @@ const collections = [
       { kind: 'float', key: 'price', required: true, default: 0 },
       { kind: 'string', key: 'videoRoomUrl', size: 500, required: false },
       { kind: 'boolean', key: 'published', required: true, default: false },
-      { kind: 'enum', key: 'level', elements: LEVELS, required: false }, // v3
+      { kind: 'enum', key: 'level', elements: LEVELS, required: false },
+      // v5: session lobby. All optional: a section only shows when it has data.
+      { kind: 'integer', key: 'durationMinutes', required: false, default: 45 },
+      { kind: 'string', key: 'topics', size: 255, required: false, array: true }, // v5: "When did you last go to the doctor?"
+      { kind: 'string', key: 'words', size: 128, required: false, array: true }, // v5: "en recept | a prescription"
     ],
     indexes: [{ key: 'dateTime_idx', type: IndexType.Key, attributes: ['dateTime'] }],
   },
@@ -219,6 +229,12 @@ const collections = [
       { kind: 'integer', key: 'spotsBooked', required: false, default: 0 },
       { kind: 'boolean', key: 'published', required: true, default: false },
       { kind: 'float', key: 'price', required: false, default: 0 }, // v3: single event price
+      // v4: event detail page. All optional: a section only shows when it has data.
+      { kind: 'integer', key: 'durationMinutes', required: false },
+      { kind: 'string', key: 'meetingPoint', size: 500, required: false },
+      { kind: 'string', key: 'teacherId', size: 64, required: false }, // v4 → teachers (the host)
+      { kind: 'string', key: 'agenda', size: 255, required: false, array: true }, // v4: "09:30 | What | Note"
+      { kind: 'string', key: 'words', size: 128, required: false, array: true }, // v4: "en kanelsnegl | a cinnamon swirl"
     ],
     indexes: [
       { key: 'dateTime_idx', type: IndexType.Key, attributes: ['dateTime'] },
@@ -322,7 +338,8 @@ async function createAttribute(collectionId, attr) {
   switch (attr.kind) {
     case 'string':
       return ignoreExists(
-        // v3: last argument is "is this a list?" — true only for lessons.words
+        // Last argument is "is this a list?" — true for lessons.words (v3),
+        // events.agenda / events.words (v4) and liveClasses.topics / liveClasses.words (v5)
         databases.createStringAttribute(DB_ID, collectionId, attr.key, attr.size, attr.required, xdefault, attr.array ?? false),
         label
       )

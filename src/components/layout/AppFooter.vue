@@ -1,51 +1,51 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import danesLogo from '@/assets/img/danes-logo.png'
+
+const ABOUT = [
+  { to: '/', label: 'Home' },
+  { to: '/courses', label: 'Courses' },
+  { to: '/live-classes', label: 'Speaking Club' },
+  { to: '/events', label: 'Events' },
+  { to: '/level-test', label: 'Level test' },
+  { to: '/about', label: 'About us' },
+]
+const SOCIAL = ['Instagram', 'Facebook', 'LinkedIn', 'Threads']
+const PHONES = [
+  { city: 'CPH', number: '(45) 5515-8465' },
+  { city: 'AAR', number: '(45) 5515-7854' },
+  { city: 'EBJ', number: '(45) 5515-2145' },
+]
 </script>
 
 <template>
-  <footer class="rounded-t-[32px] bg-sky px-6 py-14 md:rounded-t-[58px] md:py-16">
-    <div class="mx-auto max-w-5xl">
-      <div class="flex flex-col gap-12 md:flex-row md:justify-between">
-        <div>
-          <img :src="danesLogo" alt="DANES" class="h-14 w-auto md:h-16" />
-          <a href="mailto:contact@danes.dk" class="mt-6 flex items-center gap-3">
-            <span class="flex h-11 w-11 items-center justify-center rounded-full bg-red text-lg text-white">↗</span>
-            <span class="text-lg font-semibold text-ink">contact@danes.dk</span>
-          </a>
-        </div>
+  <footer class="mt-[72px] rounded-t-ds bg-sky sm:mt-[120px]">
+    <div class="mx-auto flex max-w-[1200px] flex-wrap gap-8 px-4 py-10 sm:px-10">
+      <div class="flex flex-[2_1_320px] flex-col gap-8">
+        <img :src="danesLogo" alt="DANES" class="h-12 w-auto self-start sm:h-16" />
+        <p class="max-w-[320px] text-[22px] font-semibold leading-tight text-ink sm:text-2xl">Your bridge into Danish life.</p>
+        <a href="mailto:contact@danes.dk" class="inline-flex items-center gap-3 self-start font-semibold text-ink no-underline hover:text-red">
+          <span aria-hidden="true" class="flex h-12 w-12 items-center justify-center rounded-full bg-red text-xl font-semibold text-white">
+            <span class="-rotate-[25deg]">&gt;</span>
+          </span>
+          contact@danes.dk
+        </a>
+      </div>
 
-        <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
-          <div>
-            <p class="text-sm font-semibold uppercase tracking-wide text-ink">About</p>
-            <ul class="mt-4 space-y-2 text-sm text-ink/80">
-              <li><RouterLink to="/" class="hover:text-ink">Home</RouterLink></li>
-              <li><RouterLink to="/#about" class="hover:text-ink">About</RouterLink></li>
-              <li><RouterLink to="/courses" class="hover:text-ink">Courses</RouterLink></li>
-              <li><RouterLink to="/live-classes" class="hover:text-ink">Speaking Club</RouterLink></li>
-              <li><RouterLink to="/events" class="hover:text-ink">Events</RouterLink></li>
-              <li><RouterLink to="/signup" class="hover:text-ink">Level Test</RouterLink></li>
-            </ul>
-          </div>
-          <div>
-            <p class="text-sm font-semibold uppercase tracking-wide text-ink">Follow us</p>
-            <ul class="mt-4 space-y-2 text-sm text-ink/80">
-              <li><a href="#" class="hover:text-ink">Instagram</a></li>
-              <li><a href="#" class="hover:text-ink">Facebook</a></li>
-              <li><a href="#" class="hover:text-ink">Linkedin</a></li>
-              <li><a href="#" class="hover:text-ink">Threads</a></li>
-            </ul>
-          </div>
-          <div class="col-span-2 sm:col-span-1">
-            <p class="text-sm font-semibold uppercase tracking-wide text-ink">Contact</p>
-            <ul class="mt-4 space-y-2 text-sm text-ink/80">
-              <li><a href="mailto:contact@danes.dk" class="hover:text-ink">contact@danes.dk</a></li>
-              <li>CPH &nbsp;(45) 5515-8465</li>
-              <li>AAR &nbsp;(45) 5515-7854</li>
-              <li>BLL &nbsp;&nbsp;(45) 5515-2145</li>
-            </ul>
-          </div>
-        </div>
+      <nav aria-label="About" class="flex flex-[1_1_160px] flex-col gap-3">
+        <span class="text-sm font-semibold uppercase text-ink">About</span>
+        <RouterLink v-for="link in ABOUT" :key="link.to" :to="link.to" class="text-ink no-underline hover:text-red">{{ link.label }}</RouterLink>
+      </nav>
+
+      <div class="flex flex-[1_1_160px] flex-col gap-3">
+        <span class="text-sm font-semibold uppercase text-ink">Follow us</span>
+        <!-- No real profiles yet, so these are plain text, not dead links -->
+        <span v-for="name in SOCIAL" :key="name" class="text-ink">{{ name }}</span>
+      </div>
+
+      <div class="flex flex-[1_1_200px] flex-col gap-3">
+        <span class="text-sm font-semibold uppercase text-ink">Contact</span>
+        <span v-for="phone in PHONES" :key="phone.city" class="text-ink">{{ phone.city }} {{ phone.number }}</span>
       </div>
     </div>
   </footer>

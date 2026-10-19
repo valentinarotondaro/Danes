@@ -1,14 +1,14 @@
 // src/composables/useRsvp.js
 //
 // Sign-up logic for anything with seats: RSVP when there's a spot, join the
-// waitlist when it's full. itemType is 'event' (default) or 'liveClass'.
-// The status lives in `orders`: 'confirmed' = going, 'waitlist' = waiting.
-// No separate waitlist collection — see data-model.md.
+// waitlist when it's full, cancel to give the spot back. itemType is 'event'
+// (default) or 'liveClass'. The status lives in `orders`:
+// 'confirmed' = going, 'waitlist' = waiting, 'cancelled' = gave it back.
 
 import { computed, ref } from 'vue'
 import { useAuth } from '@/composables/useAuth'
 import * as orderService from '@/services/orderService'
-import { reserveSpot } from '@/services/spotService'
+import { reserveSpot, cancelSpot } from '@/services/spotService'
 
 export function useRsvp(itemType = 'event') {
   const { currentUser, isLoggedIn } = useAuth()
@@ -33,35 +33,41 @@ export function useRsvp(itemType = 'event') {
     }
   }
 
-  // The server function checks capacity and adds +1. Returns { spotsBooked }.
-  async function rsvp(item) {
+  // Runs an action with the shared loading/error handling
+  async function run(action) {
     rsvping.value = true
     error.value = null
     try {
+      return await action()
+    } catch (err) {
+      error.value = err.message
+      throw err
+    } finally {
+      rsvping.value = false
+    }
+  }
+
+  // The server function checks capacity and adds +1. Returns { spotsBooked }.
+  const rsvp = (item) =>
+    run(async () => {
       const result = await reserveSpot(itemType, item.$id)
       status.value = 'confirmed'
       return result
-    } catch (err) {
-      error.value = err.message
-      throw err
-    } finally {
-      rsvping.value = false
-    }
-  }
+    })
 
-  async function joinWaitlist(item) {
-    rsvping.value = true
-    error.value = null
-    try {
+  const joinWaitlist = (item) =>
+    run(async () => {
       await orderService.createOrder(currentUser.value.$id, itemType, item.$id, 0, 'waitlist')
       status.value = 'waitlist'
-    } catch (err) {
-      error.value = err.message
-      throw err
-    } finally {
-      rsvping.value = false
-    }
-  }
+    })
 
-  return { status, hasRsvpd, isWaitlisted, checking, rsvping, error, checkRsvp, rsvp, joinWaitlist }
+  // The server function marks the order cancelled and gives the spot back (-1)
+  const cancel = (item) =>
+    run(async () => {
+      const result = await cancelSpot(itemType, item.$id)
+      status.value = null
+      return result
+    })
+
+  return { status, hasRsvpd, isWaitlisted, checking, rsvping, error, checkRsvp, rsvp, joinWaitlist, cancel }
 }

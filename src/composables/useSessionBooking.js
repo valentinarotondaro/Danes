@@ -1,8 +1,8 @@
 // src/composables/useSessionBooking.js
 //
-// Everything one Speaking Club session row needs: seats, date labels and the
-// Book / Join the waitlist actions. Same idea as useEventSignup, but for
-// liveClasses, so it reuses useRsvp with itemType 'liveClass'.
+// Everything one Speaking Club session needs: seats, date labels and the
+// Book / Join the waitlist / Cancel actions. Same idea as useEventSignup,
+// but for liveClasses, so it reuses useRsvp with itemType 'liveClass'.
 
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -12,7 +12,7 @@ import { useRsvp } from '@/composables/useRsvp'
 export function useSessionBooking(session) {
   const { isLoggedIn } = useAuth()
   const router = useRouter()
-  const { hasRsvpd, isWaitlisted, rsvping, error, checkRsvp, rsvp, joinWaitlist } = useRsvp('liveClass')
+  const { hasRsvpd, isWaitlisted, rsvping, error, checkRsvp, rsvp, joinWaitlist, cancel } = useRsvp('liveClass')
 
   const taken = computed(() => session.value.spotsBooked ?? 0)
   const isFull = computed(() => taken.value >= session.value.capacity)
@@ -26,7 +26,7 @@ export function useSessionBooking(session) {
 
   function requireLogin() {
     if (isLoggedIn.value) return true
-    router.push({ name: 'login', query: { redirect: '/live-classes' } })
+    router.push({ name: 'login', query: { redirect: router.currentRoute.value.fullPath } })
     return false
   }
 
@@ -49,12 +49,21 @@ export function useSessionBooking(session) {
     }
   }
 
+  async function cancelSeat() {
+    try {
+      const { spotsBooked } = await cancel(session.value)
+      session.value.spotsBooked = spotsBooked
+    } catch {
+      // message is in `error`
+    }
+  }
+
   onMounted(() => {
     if (isLoggedIn.value) checkRsvp(session.value.$id)
   })
 
   return {
     taken, isFull, percentTaken, month, day, time,
-    isBooked: hasRsvpd, isWaitlisted, rsvping, error, book, waitlist,
+    isBooked: hasRsvpd, isWaitlisted, rsvping, error, book, waitlist, cancelSeat,
   }
 }

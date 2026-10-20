@@ -40,8 +40,19 @@ const routes = [
   { path: '/signup', name: 'signup', component: () => import('@/views/SignupView.vue'), meta: { guestOnly: true } },
 
   // Admin
-  { path: '/admin', name: 'admin-dashboard', component: () => import('@/views/AdminDashboardView.vue'), meta: { requiresAdmin: true } },
-  { path: '/admin/:collection/:id?', name: 'admin-edit', component: () => import('@/views/AdminEditView.vue'), meta: { requiresAdmin: true } },
+  // Admin: its own layout with a sidebar (meta.focus hides the site header and footer).
+  // The children share the layout; requiresAdmin on the parent protects all of them.
+  {
+    path: '/admin',
+    component: () => import('@/views/AdminLayout.vue'),
+    meta: { requiresAdmin: true, focus: true },
+    children: [
+      { path: '', name: 'admin-dashboard', component: () => import('@/views/AdminDashboardView.vue') },
+      { path: ':collection', name: 'admin-list', component: () => import('@/views/AdminListView.vue') },
+      // id is 'new' when creating
+      { path: ':collection/:id', name: 'admin-edit', component: () => import('@/views/AdminEditView.vue') },
+    ],
+  },
 
   // Catch-all — must stay last. Without this, an unmatched URL just renders
   // a blank page instead of giving the user any feedback.
@@ -65,7 +76,7 @@ router.beforeEach(async (to) => {
     await initSession()
   }
 
-  if (to.meta.requiresAuth && !isLoggedIn.value) {
+  if ((to.meta.requiresAuth || to.meta.requiresAdmin) && !isLoggedIn.value) {
     return { name: 'login', query: { redirect: to.fullPath } }
   }
 

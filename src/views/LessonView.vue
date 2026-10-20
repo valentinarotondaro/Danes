@@ -18,7 +18,8 @@ const lesson = computed(() => lessons.value.find((l) => l.$id === lessonId))
 // already just an ID. Simple enough not to need a dedicated composable.
 const embedUrl = computed(() => {
   if (!lesson.value?.videoUrl) return ''
-  const match = lesson.value.videoUrl.match(/(?:v=|\.be\/)([\w-]{11})/)
+    // Works with watch?v=…, youtu.be/…, /embed/…, /shorts/… and /live/… links
+  const match = lesson.value.videoUrl.match(/(?:v=|\.be\/|embed\/|shorts\/|live\/)([\w-]{11})/)
   const id = match ? match[1] : lesson.value.videoUrl
   return `https://www.youtube.com/embed/${id}`
 })

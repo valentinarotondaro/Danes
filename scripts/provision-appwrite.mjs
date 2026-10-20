@@ -259,6 +259,10 @@ const collections = [
       { kind: 'string', key: 'liveClassId', size: 64, required: false },
       { kind: 'string', key: 'eventId', size: 64, required: false },
       { kind: 'boolean', key: 'published', required: true, default: false },
+      // v6: what a plan includes; the checkout and the plan cards read these
+      { kind: 'boolean', key: 'includesCourse', required: false, default: false },
+      { kind: 'boolean', key: 'includesSpeakingClub', required: false, default: false },
+      { kind: 'boolean', key: 'includesEvents', required: false, default: false },
     ],
     indexes: [],
   },

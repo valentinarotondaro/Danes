@@ -3,7 +3,7 @@ import { useId } from 'vue'
 
 // One labelled input from the design system. Shows `error` in red,
 // otherwise the optional `hint` in grey under the field.
-defineProps({
+const props = defineProps({
   modelValue: { type: [String, Number], default: '' },
   label: { type: String, required: true },
   type: { type: String, default: 'text' },
@@ -12,16 +12,19 @@ defineProps({
   autocomplete: { type: String, default: 'off' },
   inputmode: { type: String, default: undefined },
   placeholder: { type: String, default: '' },
+  id: { type: String, default: '' }, // optional: lets an error summary link to the field
 })
 defineEmits(['update:modelValue'])
 
-const messageId = useId()
+const inputId = props.id || useId()
+const messageId = `${inputId}-msg`
 </script>
 
 <template>
-  <label class="flex flex-col gap-2">
-    <span class="text-sm font-semibold text-ink">{{ label }}</span>
+  <div class="flex flex-col gap-2">
+    <label :for="inputId" class="text-sm font-semibold text-ink">{{ label }}</label>
     <input
+      :id="inputId"
       :type="type"
       :value="modelValue"
       :autocomplete="autocomplete"
@@ -35,5 +38,5 @@ const messageId = useId()
     />
     <span v-if="error" :id="messageId" class="text-sm text-red">{{ error }}</span>
     <span v-else-if="hint" :id="messageId" class="text-sm text-ink-muted">{{ hint }}</span>
-  </label>
+  </div>
 </template>

@@ -51,3 +51,12 @@ export async function getOrderStatus(userId, itemType, itemId) {
   ])
   return res.documents[0]?.status ?? null
 }
+
+// Admin only: the latest orders of everyone (the admins team can read all orders)
+export async function listAllOrders(limit = 100) {
+  const res = await databases.listDocuments(DB_ID, COLLECTIONS.ORDERS, [
+    Query.orderDesc('$createdAt'),
+    Query.limit(limit),
+  ])
+  return res.documents
+}

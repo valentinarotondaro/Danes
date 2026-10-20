@@ -14,7 +14,7 @@ const routes = [
   // LEARN
   { path: '/courses', name: 'course-catalog', component: () => import('@/views/CourseCatalogView.vue') },
   { path: '/courses/:id', name: 'course-detail', component: () => import('@/views/CourseDetailView.vue') },
-  { path: '/courses/:courseId/lessons/:lessonId', name: 'lesson', component: () => import('@/views/LessonView.vue'), meta: { requiresAuth: true } },
+  { path: '/courses/:courseId/lessons/:lessonId', name: 'lesson', component: () => import('@/views/LessonView.vue'), meta: { requiresAuth: true, focus: true } },
 
   // Level test: full screen, without the site header and footer (meta.focus)
   { path: '/level-test', name: 'level-test', component: () => import('@/views/LevelTestView.vue'), meta: { focus: true } },

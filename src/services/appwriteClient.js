@@ -29,6 +29,7 @@ export const COLLECTIONS = {
   EVENTS: 'events',
   PACKAGES: 'bundles', // Appwrite collection ID stayed "bundles" — only the display name changed to Packages
   ORDERS: 'orders',
+  LESSON_PROGRESS: 'lessonProgress',
 }
 // Appwrite Functions (server code). The ID is the one you typed when creating it.
 export const FUNCTIONS = {

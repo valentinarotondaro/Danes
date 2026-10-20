@@ -24,7 +24,13 @@ export function useOrders() {
       purchasing.value = false
     }
   }
-
+  // Buying a bundle writes ONE order for the bundle itself (the receipt, at
+  // the bundle's price) plus one derived order per included item (course /
+  // liveClass / event), each at amount=0 since payment was already captured
+  // on the bundle order. This is the documented architectural decision: a
+  // single polymorphic `orders` table handles purchases, bookings, and RSVPs
+  // uniformly — useCourseAccess, capacity checks, and "My Account" never need
+  // to know whether access came from a bundle or a solo purchase.
   // Books a live class through the reserve-spot server function: it checks
   // capacity, adds +1 in one atomic step and creates the order.
   // Returns { status, spotsBooked }.
@@ -41,14 +47,10 @@ export function useOrders() {
     }
   }
 
-  // Buying a bundle writes ONE order for the bundle itself (the receipt, at
-  // the bundle's price) plus one derived order per included item (course /
-  // liveClass / event), each at amount=0 since payment was already captured
-  // on the bundle order. This is the documented architectural decision: a
-  // single polymorphic `orders` table handles purchases, bookings, and RSVPs
-  // uniformly — useCourseAccess, capacity checks, and "My Account" never need
-  // to know whether access came from a bundle or a solo purchase.
-  async function purchaseBundle(bundle) {
+  
+  // courseId: the course the learner picked at checkout, for packages that
+  // include "one course of your choice". Falls back to bundle.courseId.
+  async function purchaseBundle(bundle, courseId = null) {
     purchasing.value = true
     error.value = null
     try {
@@ -68,10 +70,11 @@ export function useOrders() {
       const bundleOrder = await orderService.createOrder(
         currentUser.value.$id, 'bundle', bundle.$id, bundle.price
       )
-
-      if (bundle.courseId) {
-        await orderService.createOrder(currentUser.value.$id, 'course', bundle.courseId, 0)
+      const chosenCourseId = courseId || bundle.courseId
+      if (chosenCourseId) {
+        await orderService.createOrder(currentUser.value.$id, 'course', chosenCourseId, 0)
       }
+
       // Spots go through the server function, which checks the package order exists
       if (bundle.liveClassId) await reserveSpot('liveClass', bundle.liveClassId, bundle.$id)
       if (bundle.eventId) await reserveSpot('event', bundle.eventId, bundle.$id)

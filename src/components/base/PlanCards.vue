@@ -33,7 +33,7 @@ defineProps({
         </li>
       </ul>
       <RouterLink
-        to="/checkout"
+        :to="{ name: 'checkout', query: { plan: plan.name } }"
         class="mt-auto rounded-ds px-6 py-3 text-center font-semibold no-underline"
         :class="plan.featured ? 'bg-sky text-ink hover:bg-white' : 'bg-red text-white hover:bg-red-hover'"
       >

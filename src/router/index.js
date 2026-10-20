@@ -32,7 +32,7 @@ const routes = [
 
   // Packages / commerce (Appwrite collection ID is still "bundles" — see appwriteClient.js)
   { path: '/packages/:id', name: 'package-detail', component: () => import('@/views/PackageDetailView.vue') },
-  { path: '/checkout', name: 'checkout', component: () => import('@/views/CheckoutView.vue'), meta: { requiresAuth: true } },
+  { path: '/checkout', name: 'checkout', component: () => import('@/views/CheckoutView.vue'), meta: { requiresAuth: true, focus: true } },
   { path: '/account', name: 'my-account', component: () => import('@/views/MyAccountView.vue'), meta: { requiresAuth: true } },
 
   // Auth

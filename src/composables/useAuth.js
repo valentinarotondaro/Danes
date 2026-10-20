@@ -59,12 +59,13 @@ async function login(email, password) {
   }
 }
 
-async function signup(email, password, name) {
+async function signup(email, password, name, journey = '') {
   authError.value = null
   try {
     await authService.signup(email, password, name)
     currentUser.value = await authService.getCurrentUser()
-    await createProfile(currentUser.value.$id, name, email)
+     // journey = "How much Danish do you speak?" (only saved if they picked one)
+    await createProfile(currentUser.value.$id, name, email, journey ? { journey } : {})
     await resolveRole()
   } catch (err) {
     authError.value = err.message

@@ -1,27 +1,39 @@
 <script setup>
+import { useId } from 'vue'
+
+// One labelled input from the design system. Shows `error` in red,
+// otherwise the optional `hint` in grey under the field.
 defineProps({
-  modelValue: { type: String, default: '' },
+  modelValue: { type: [String, Number], default: '' },
   label: { type: String, required: true },
   type: { type: String, default: 'text' },
   error: { type: String, default: '' },
+  hint: { type: String, default: '' },
   autocomplete: { type: String, default: 'off' },
+  inputmode: { type: String, default: undefined },
+  placeholder: { type: String, default: '' },
 })
 defineEmits(['update:modelValue'])
+
+const messageId = useId()
 </script>
 
 <template>
-  <label class="block">
-    <span class="text-sm text-neutral-700">{{ label }}</span>
+  <label class="flex flex-col gap-2">
+    <span class="text-sm font-semibold text-ink">{{ label }}</span>
     <input
       :type="type"
       :value="modelValue"
       :autocomplete="autocomplete"
+      :inputmode="inputmode"
+      :placeholder="placeholder"
+      :aria-invalid="error ? 'true' : undefined"
+      :aria-describedby="error || hint ? messageId : undefined"
+      class="h-12 w-full rounded-ds border bg-white px-4 text-ink outline-none transition-colors focus:ring-2 focus:ring-ink focus:ring-offset-2"
+      :class="error ? 'border-red' : 'border-line hover:border-ink-muted'"
       @input="$emit('update:modelValue', $event.target.value)"
-      class="mt-1.5 w-full rounded-md border px-3 py-2 text-neutral-900 outline-none transition-colors focus:ring-2 focus:ring-offset-1"
-      :class="error
-        ? 'border-red-600 focus:border-red-600 focus:ring-red-200'
-        : 'border-neutral-300 focus:border-[#C8102E] focus:ring-[#C8102E]/20'"
     />
-    <span v-if="error" class="mt-1 block text-sm text-red-600">{{ error }}</span>
+    <span v-if="error" :id="messageId" class="text-sm text-red">{{ error }}</span>
+    <span v-else-if="hint" :id="messageId" class="text-sm text-ink-muted">{{ hint }}</span>
   </label>
 </template>

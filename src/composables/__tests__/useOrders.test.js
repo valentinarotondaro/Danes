@@ -76,4 +76,13 @@ describe('useOrders.purchaseBundle', () => {
     expect(orderService.createOrder).toHaveBeenCalledTimes(2) // bundle + course only
     expect(reserveSpot).not.toHaveBeenCalled()
   })
+    it('gives access to the course the learner picked at checkout', async () => {
+    const starter = { $id: 'bundle-3', price: 549, includesCourse: true }
+    const { purchaseBundle } = useOrders()
+
+    await purchaseBundle(starter, 'course-7')
+
+    expect(orderService.createOrder).toHaveBeenNthCalledWith(1, 'user-1', 'bundle', 'bundle-3', 549)
+    expect(orderService.createOrder).toHaveBeenNthCalledWith(2, 'user-1', 'course', 'course-7', 0)
+  })
 })

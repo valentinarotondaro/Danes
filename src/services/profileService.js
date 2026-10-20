@@ -2,7 +2,8 @@
 import { ID, Permission, Role, Query } from 'appwrite'
 import { databases, DB_ID, COLLECTIONS } from './appwriteClient'
 
-export async function createProfile(userId, name, email) {
+// extra: optional fields, e.g. { journey: 'a-little' }
+export async function createProfile(userId, name, email, extra = {}) {
   return databases.createDocument(
     DB_ID,
     COLLECTIONS.PROFILES,
@@ -13,6 +14,7 @@ export async function createProfile(userId, name, email) {
       email,
       role: 'learner',
       createdAt: new Date().toISOString(),
+      ...extra,
     },
     [Permission.read(Role.user(userId)), Permission.update(Role.user(userId))]
   )

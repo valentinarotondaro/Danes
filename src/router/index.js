@@ -33,7 +33,18 @@ const routes = [
   // Packages / commerce (Appwrite collection ID is still "bundles" — see appwriteClient.js)
   { path: '/packages/:id', name: 'package-detail', component: () => import('@/views/PackageDetailView.vue') },
   { path: '/checkout', name: 'checkout', component: () => import('@/views/CheckoutView.vue'), meta: { requiresAuth: true, focus: true } },
-  { path: '/account', name: 'my-account', component: () => import('@/views/MyAccountView.vue'), meta: { requiresAuth: true } },
+  // My account: one layout (tabs + data) and four tabs, each with its own URL
+  {
+    path: '/account',
+    component: () => import('@/views/AccountLayout.vue'),
+    meta: { requiresAuth: true },
+    children: [
+      { path: '', name: 'my-account', component: () => import('@/views/AccountOverviewView.vue') },
+      { path: 'courses', name: 'account-courses', component: () => import('@/views/AccountCoursesView.vue') },
+      { path: 'events', name: 'account-events', component: () => import('@/views/AccountEventsView.vue') },
+      { path: 'profile', name: 'account-profile', component: () => import('@/views/AccountProfileView.vue') },
+    ],
+  },
 
   // Auth
   { path: '/login', name: 'login', component: () => import('@/views/LoginView.vue'), meta: { guestOnly: true } },

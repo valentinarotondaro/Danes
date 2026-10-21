@@ -9,6 +9,7 @@ import { useTeachers } from '@/composables/useTeachers'
 import LoadingState from '@/components/base/LoadingState.vue'
 import ErrorState from '@/components/base/ErrorState.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
+import LessonVideo from '@/components/lesson/LessonVideo.vue'
 
 const route = useRoute()
 const courseId = route.params.id
@@ -78,6 +79,14 @@ async function onPurchase() {
           </span>
           <h1 class="text-[40px] font-semibold leading-[1.1] text-ink sm:text-[56px]">{{ course.title }}</h1>
           <p class="max-w-2xl text-lg text-ink-muted">{{ course.description }}</p>
+
+          <!-- The trailer: the teacher presents the course, free to watch before buying -->
+          <figure v-if="course.introVideoUrl" class="flex flex-col gap-3">
+            <LessonVideo :url="course.introVideoUrl" :title="`Introduction to ${course.title}`" />
+            <figcaption class="text-sm text-ink-muted">
+              Watch the introduction{{ teacher ? ` with ${teacher.name}` : '' }}: what you’ll learn and where you’ll be at the end.
+            </figcaption>
+          </figure>
 
           <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink">
             <li><span class="font-semibold">{{ modules.length }}</span> modules</li>

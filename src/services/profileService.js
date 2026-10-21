@@ -38,3 +38,7 @@ export async function saveLevel(user, level) {
   const created = await createProfile(user.$id, user.name || user.email, user.email)
   return databases.updateDocument(DB_ID, COLLECTIONS.PROFILES, created.$id, { level })
 }
+// The learner's own changes from the Profile tab (city, level, email choices…)
+export async function updateProfile(profileId, data) {
+  return databases.updateDocument(DB_ID, COLLECTIONS.PROFILES, profileId, data)
+}

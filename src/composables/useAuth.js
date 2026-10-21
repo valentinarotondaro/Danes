@@ -79,8 +79,14 @@ async function logout() {
   role.value = 'guest'
 }
 
+// After the learner changes their name: reload the user so the header updates too
+async function refreshUser() {
+  currentUser.value = await authService.getCurrentUser()
+}
+
 export function useAuth() {
   return {
+    refreshUser,
     currentUser,
     isLoggedIn,
     isInitializing,

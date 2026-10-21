@@ -35,6 +35,7 @@ export async function listOrdersForUser(userId) {
   const res = await databases.listDocuments(DB_ID, COLLECTIONS.ORDERS, [
     Query.equal('userId', userId),
     Query.orderDesc('$createdAt'),
+    Query.limit(200), // Appwrite returns 25 by default
   ])
   return res.documents
 }
@@ -59,4 +60,10 @@ export async function listAllOrders(limit = 100) {
     Query.limit(limit),
   ])
   return res.documents
+}
+
+// The learner changes the status of their own order, e.g. leaving a waitlist ('cancelled').
+// Allowed because each order gives update permission to its owner.
+export async function updateOrderStatus(orderId, status) {
+  return databases.updateDocument(DB_ID, COLLECTIONS.ORDERS, orderId, { status })
 }

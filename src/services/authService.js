@@ -25,3 +25,13 @@ export async function getCurrentUser() {
   // and treat it as "not logged in", not as an unexpected error.
   return account.get()
 }
+
+// The name on the Appwrite account (shown in the header and the admin)
+export async function updateName(name) {
+  return account.updateName(name)
+}
+
+// Appwrite asks for the old password too, so a stolen open laptop can't change it
+export async function updatePassword(newPassword, oldPassword) {
+  return account.updatePassword(newPassword, oldPassword)
+}

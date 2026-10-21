@@ -10,6 +10,7 @@ const props = defineProps({
   confirmLabel: { type: String, default: 'Delete' },
   cancelLabel: { type: String, default: 'Keep it' },
   busy: { type: Boolean, default: false },
+  final: { type: Boolean, default: true }, // adds “This can’t be undone.”
 })
 const emit = defineEmits(['confirm', 'cancel'])
 
@@ -42,7 +43,7 @@ watch(
         </span>
         <div class="flex flex-col gap-2">
           <h2 id="confirm-title" class="text-2xl font-semibold leading-tight">{{ title }}</h2>
-          <p id="confirm-desc" class="text-ink-muted">{{ message }} This can’t be undone.</p>
+          <p id="confirm-desc" class="text-ink-muted">{{ message }}<template v-if="final"> This can’t be undone.</template></p>
         </div>
       </div>
       <div class="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">

@@ -152,6 +152,7 @@ const collections = [
       { kind: 'boolean', key: 'published', required: true, default: false },
       { kind: 'enum', key: 'level', elements: LEVELS, required: false }, // v3
       { kind: 'string', key: 'teacherId', size: 64, required: false }, // v3 → teachers
+      { kind: 'string', key: 'introVideoUrl', size: 255, required: false }, // v7: the teacher presents the course (YouTube)
     ],
     indexes: [{ key: 'slug_unique', type: IndexType.Unique, attributes: ['slug'] }],
   },

@@ -2,13 +2,14 @@
 import { computed, onMounted } from 'vue'
 import { useAdminForm } from '@/composables/useAdminForm'
 import { useTeachers } from '@/composables/useTeachers'
-import { required, price, optionalUrl, slugify } from '@/utils/adminForm'
+import { required, price, optionalUrl, youtubeUrl, slugify } from '@/utils/adminForm'
 import { LEVEL_OPTIONS } from '@/components/admin/adminOptions'
 import AdminFormShell from '@/components/admin/AdminFormShell.vue'
 import AdminSection from '@/components/admin/AdminSection.vue'
 import AdminVisibility from '@/components/admin/AdminVisibility.vue'
 import AdminDeleteSection from '@/components/admin/AdminDeleteSection.vue'
 import AdminLessonManager from '@/components/admin/AdminLessonManager.vue'
+import LessonVideo from '@/components/lesson/LessonVideo.vue'
 import FormField from '@/components/base/FormField.vue'
 import SelectField from '@/components/base/SelectField.vue'
 import TextAreaField from '@/components/base/TextAreaField.vue'
@@ -24,10 +25,10 @@ const { isNew, form, loading, loadError, errors, saving, saveError, deleting, is
   collection: 'courses',
   id: props.id,
   editAfterCreate: true, // lessons can only be added once the course exists
-  defaults: () => ({ title: '', slug: '', description: '', level: '', teacherId: '', price: 399, thumbnailUrl: '', published: false, journeyTag: '' }),
+  defaults: () => ({ title: '', slug: '', description: '', level: '', teacherId: '', price: 399, thumbnailUrl: '', introVideoUrl: '', published: false, journeyTag: '' }),
   fromDoc: (doc) => ({
     title: doc.title, slug: doc.slug, description: doc.description ?? '', level: doc.level ?? '', teacherId: doc.teacherId ?? '',
-    price: doc.price, thumbnailUrl: doc.thumbnailUrl ?? '', published: doc.published, journeyTag: doc.journeyTag ?? '',
+    price: doc.price, thumbnailUrl: doc.thumbnailUrl ?? '', introVideoUrl: doc.introVideoUrl ?? '', published: doc.published, journeyTag: doc.journeyTag ?? '',
   }),
   toPayload: (f) => ({
     ...f,
@@ -36,11 +37,14 @@ const { isNew, form, loading, loadError, errors, saving, saveError, deleting, is
     price: Number(f.price),
     level: f.level || null, // '' is not a valid level for Appwrite
     teacherId: f.teacherId || null,
+    introVideoUrl: f.introVideoUrl.trim() || null,
   }),
   validate: (f) => ({
     'course-title': required(f.title, 'Add a title.'),
     'course-price': price(f.price),
     'course-image': optionalUrl(f.thumbnailUrl),
+    // Optional, but when there is one it has to be YouTube (the page embeds it)
+    'course-intro': f.introVideoUrl.trim() ? youtubeUrl(f.introVideoUrl) : '',
   }),
 })
 
@@ -75,6 +79,11 @@ onMounted(() => {
           <SelectField v-model="form.level" label="Level" :options="LEVEL_OPTIONS" placeholder="All levels" />
           <SelectField v-model="form.teacherId" label="Teacher" :options="teacherOptions" placeholder="No teacher yet" />
         </div>
+      </AdminSection>
+
+      <AdminSection title="Intro video" description="The teacher presents the course: what learners will do and where they’ll be at the end. Shown on the course page, before buying.">
+        <LessonVideo v-if="form.introVideoUrl && !errors['course-intro'] && !youtubeUrl(form.introVideoUrl)" :url="form.introVideoUrl" title="Intro video preview" />
+        <FormField id="course-intro" v-model="form.introVideoUrl" label="YouTube link" placeholder="https://youtube.com/watch?v=…" :error="errors['course-intro']" hint="Optional. 1–3 minutes works best." />
       </AdminSection>
 
       <AdminSection v-if="!isNew" title="Lessons" description="Recorded YouTube lessons, in the order learners watch them.">

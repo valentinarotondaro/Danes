@@ -9,8 +9,10 @@
     "preview": "vite preview",
     "test": "vitest run",
     "provision": "node scripts/provision-appwrite.mjs",
-   "seed:events": "node scripts/seed-events.mjs"  },
-  "seed:sessions": "node scripts/seed-sessions.mjs",
+    "seed:events": "node scripts/seed-events.mjs",
+    "seed:sessions": "node scripts/seed-sessions.mjs",
+    "seed:lessons": "node scripts/seed-lessons.mjs"
+  },
   "dependencies": {
     "appwrite": "^26.2.0",
     "vue": "^3.5.41",

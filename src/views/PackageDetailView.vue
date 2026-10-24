@@ -45,18 +45,18 @@ function goToCheckout() {
     <ErrorState v-else-if="error" :message="error" @retry="fetchPackage" />
 
     <template v-else-if="pkg">
-      <h1 class="text-3xl font-bold text-ink">{{ pkg.title }}</h1>
-      <p class="mt-3 text-black/60">{{ pkg.description }}</p>
-      <p class="mt-4 text-lg font-extrabold text-ink">{{ pkg.price }} kr. <span class="text-sm font-medium text-black/60">/month</span></p>
+      <h1 class="text-3xl font-semibold text-ink">{{ pkg.title }}</h1>
+      <p class="mt-3 text-ink-muted">{{ pkg.description }}</p>
+      <p class="mt-4 text-lg font-semibold text-ink">{{ pkg.price }} kr. <span class="text-sm font-medium text-ink-muted">/month</span></p>
 
-      <h2 class="mt-8 text-xl font-bold text-ink">What's included</h2>
+      <h2 class="mt-8 text-xl font-semibold text-ink">What's included</h2>
       <div class="mt-4">
         <PackageContentsList :pkg="pkg" />
       </div>
 
       <div class="mt-6">
         <template v-if="!isLoggedIn">
-          <p class="text-sm text-black/60">
+          <p class="text-sm text-ink-muted">
             <RouterLink :to="{ name: 'login', query: { redirect: route.fullPath } }" class="text-red hover:underline">
               Log in
             </RouterLink>
@@ -64,10 +64,10 @@ function goToCheckout() {
           </p>
         </template>
         <template v-else-if="checking">
-          <p class="text-sm text-black/60">Checking access…</p>
+          <p class="text-sm text-ink-muted">Checking access…</p>
         </template>
         <template v-else-if="hasAccess">
-          <p class="text-sm font-medium text-green-700">You already own this package.</p>
+          <p class="text-sm font-medium text-success">You already own this package.</p>
         </template>
         <template v-else>
           <BaseButton @click="goToCheckout" class="max-w-xs">Buy package — {{ pkg.price }} kr./month</BaseButton>

@@ -27,6 +27,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="loadError" class="rounded-md bg-red-50 p-4 text-sm text-red-600">{{ loadError }}</div>
-  <div v-else ref="container" class="h-[70vh] w-full overflow-hidden rounded-lg bg-black" />
+  <div v-if="loadError" role="alert" class="rounded-ds bg-red-soft p-4 text-sm text-red">{{ loadError }}</div>
+  <div v-else ref="container" class="h-[70vh] w-full overflow-hidden rounded-ds bg-black" />
 </template>

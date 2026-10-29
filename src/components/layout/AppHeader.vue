@@ -89,4 +89,14 @@ async function onLogout() {
       <div class="mt-2 flex flex-col gap-2 border-t border-ink pt-4">
         <template v-if="isLoggedIn">
           <RouterLink to="/account" class="rounded-ds bg-red px-6 py-3 text-center font-semibold text-white no-underline">My account</RouterLink>
-          <RouterLink
+          <RouterLink v-if="role === 'admin'" to="/admin" class="flex min-h-12 items-center justify-center font-semibold text-ink no-underline">Admin</RouterLink>
+          <button type="button" class="min-h-12 font-semibold text-ink" @click="onLogout">Log out</button>
+        </template>
+        <template v-else>
+          <RouterLink to="/signup" class="rounded-ds bg-red px-6 py-3 text-center font-semibold text-white no-underline">Sign up</RouterLink>
+          <RouterLink to="/login" class="flex min-h-12 items-center justify-center font-semibold text-ink no-underline">Log in</RouterLink>
+        </template>
+      </div>
+    </nav>
+  </header>
+</template>

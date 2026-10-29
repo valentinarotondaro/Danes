@@ -12,7 +12,7 @@ Learners sign up, take a level test, buy a plan (a single course, the Speaking C
 Exam project for Advanced JavaScript at Syddansk Erhvervsakademi (Multimedia Design)
 
 > Test accounts (learner and admin) are included in the exam submission, not in this repository.
-
+**Design:** [Figma: DANES design system and prototypes](https://www.figma.com/design/Q6dEiYWJT3miEpo1EmRi7h/DANES--App?node-id=103-65&t=58JJuQoTZto0Xr4L-1)
 ---
 
 ## Stack

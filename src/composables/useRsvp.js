@@ -1,5 +1,3 @@
-// src/composables/useRsvp.js
-//
 // Sign-up logic for anything with seats: RSVP when there's a spot, join the
 // waitlist when it's full, cancel to give the spot back. itemType is 'event'
 // (default) or 'liveClass'. The status lives in `orders`:

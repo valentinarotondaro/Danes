@@ -1,4 +1,3 @@
-// src/composables/useEvents.js
 import { ref } from 'vue'
 import * as eventService from '@/services/eventService'
 

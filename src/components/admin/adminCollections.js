@@ -1,5 +1,3 @@
-// src/components/admin/adminCollections.js
-//
 // One config object per collection the admin manages. AdminListView reads it
 // to know how to load, filter, show and delete each kind of document, so the
 // five lists share ONE view instead of five copies of the same page.

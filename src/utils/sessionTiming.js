@@ -1,5 +1,3 @@
-// src/utils/sessionTiming.js
-//
 // Where a session is in time. Pure functions (no Vue), so they're easy to test.
 //   upcoming → more than 10 min before start
 //   open     → the room unlocks 10 min before start

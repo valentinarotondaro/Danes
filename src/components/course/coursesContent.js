@@ -1,5 +1,3 @@
-// src/components/course/coursesContent.js
-//
 // Fixed copy for the Courses page. The course cards themselves come from
 // Appwrite; this is the text around them.
 

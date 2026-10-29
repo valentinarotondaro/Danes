@@ -1,13 +1,6 @@
-// src/composables/useCourseAccess.js
-//
-// Checks whether the current user has purchased a course, by looking at
-// their `orders` records. This is the documented client-side limitation:
-// the check happens in the browser, not on the server. lessons.read is
-// granted to any logged-in user at the Appwrite level (see provisioning
-// script), so this composable is the real gate — stronger than hiding a
-// button (it checks real backend data), but not full server enforcement.
-// V2: move this check into an Appwrite Function that only returns the
-// lesson's videoUrl after verifying entitlement server-side.
+// Has the user bought this course? Checks their orders in Appwrite.
+// Known limit: the check runs in the browser (lessons are readable by any
+// logged-in user). V2: a Function that only returns the video after checking.
 
 import { ref } from 'vue'
 import { useAuth } from '@/composables/useAuth'

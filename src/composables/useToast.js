@@ -1,5 +1,3 @@
-// src/composables/useToast.js
-//
 // The small black message after an action ("Danish for work saved.").
 // Module-level state like useAuth: any component can show a toast and the
 // one <AdminToast> in the layout displays it, even after a route change.

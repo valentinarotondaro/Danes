@@ -1,5 +1,3 @@
-// src/utils/adminStats.js
-//
 // The dashboard numbers, as pure functions: they get the documents and
 // "now" and return a value. Nothing is stored, so a number can never be
 // out of date, and every function is easy to test.

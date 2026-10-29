@@ -1,5 +1,3 @@
-// src/composables/useAdminForm.js
-//
 // Everything the five admin forms have in common: load the document, keep
 // the form state, validate, create or update in Appwrite, delete, and give
 // feedback (toast + back to the list). Each form only says what is

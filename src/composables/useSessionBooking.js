@@ -1,5 +1,3 @@
-// src/composables/useSessionBooking.js
-//
 // Everything one Speaking Club session needs: seats, date labels and the
 // Book / Join the waitlist / Cancel actions. Same idea as useEventSignup,
 // but for liveClasses, so it reuses useRsvp with itemType 'liveClass'.

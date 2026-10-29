@@ -1,9 +1,10 @@
-// src/services/teacherService.js
-import { ID } from 'appwrite'
+import { ID, Query } from 'appwrite'
 import { databases, DB_ID, COLLECTIONS } from './appwriteClient'
 
 export async function listTeachers() {
-  const res = await databases.listDocuments(DB_ID, COLLECTIONS.TEACHERS)
+  const res = await databases.listDocuments(DB_ID, COLLECTIONS.TEACHERS, [
+    Query.limit(100), // Appwrite returns 25 by default
+  ])
   return res.documents
 }
 

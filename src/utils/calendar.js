@@ -1,5 +1,3 @@
-// src/utils/calendar.js
-//
 // Builds a .ics file: the standard format every calendar app understands
 // (Google Calendar, Outlook, Apple Calendar).
 

@@ -1,5 +1,3 @@
-// functions/reserve-spot/src/main.js
-//
 // Runs on Appwrite's server, not in the browser. Learners can't write to
 // `events` or `liveClasses` (only admins can), so the browser asks this
 // function to save or give back a spot. The function checks everything

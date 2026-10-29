@@ -1,5 +1,3 @@
-// src/utils/lessonPlan.js
-//
 // Pure helpers for the lesson player: order the lessons, group them into
 // modules, find the previous and next lesson and count progress.
 

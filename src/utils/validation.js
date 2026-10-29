@@ -1,5 +1,3 @@
-// src/utils/validation.js
-//
 // Form checks as pure functions: they return an object with one message per
 // field that has a problem. An empty object means the form is valid.
 

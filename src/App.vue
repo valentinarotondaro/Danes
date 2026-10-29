@@ -4,9 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import AppSplash from '@/components/base/AppSplash.vue'
-import { useAuth } from '@/composables/useAuth'
 
-const { initSession } = useAuth()
 const route = useRoute()
 const router = useRouter()
 
@@ -20,8 +18,7 @@ const ready = ref(false)
 const pageKey = computed(() => (route.matched.length > 1 ? route.matched[0].path : route.path))
 
 onMounted(async () => {
-  initSession()
-  await router.isReady()
+  await router.isReady() // the router guard runs initSession() first
   ready.value = true
 })
 </script>

@@ -1,5 +1,3 @@
-// src/utils/levelScoring.js
-//
 // Pure function: answers in, level out. No Vue, no Appwrite, so it is easy
 // to test and to explain.
 //

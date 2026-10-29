@@ -1,4 +1,3 @@
-// src/composables/useOrders.js
 import { ref } from 'vue'
 import { useAuth } from '@/composables/useAuth'
 import * as orderService from '@/services/orderService'
@@ -11,7 +10,7 @@ export function useOrders() {
   const purchasing = ref(false)
   const error = ref(null)
 
-  // Mock checkout — no real payment gateway (out of scope per Step 4 MVP).
+  // Simulated checkout: no real payment (V2: Stripe)
   async function purchaseCourse(courseId, price) {
     purchasing.value = true
     error.value = null
@@ -24,13 +23,6 @@ export function useOrders() {
       purchasing.value = false
     }
   }
-  // Buying a bundle writes ONE order for the bundle itself (the receipt, at
-  // the bundle's price) plus one derived order per included item (course /
-  // liveClass / event), each at amount=0 since payment was already captured
-  // on the bundle order. This is the documented architectural decision: a
-  // single polymorphic `orders` table handles purchases, bookings, and RSVPs
-  // uniformly — useCourseAccess, capacity checks, and "My Account" never need
-  // to know whether access came from a bundle or a solo purchase.
   // Books a live class through the reserve-spot server function: it checks
   // capacity, adds +1 in one atomic step and creates the order.
   // Returns { status, spotsBooked }.
@@ -47,9 +39,9 @@ export function useOrders() {
     }
   }
 
-  
-  // courseId: the course the learner picked at checkout, for packages that
-  // include "one course of your choice". Falls back to bundle.courseId.
+  // A package = one order at the package price + one order per included item
+  // at 0 kr. So access checks and My account never need to know where access came from.
+  // courseId: the course picked at checkout ("one course of your choice"), else bundle.courseId.
   async function purchaseBundle(bundle, courseId = null) {
     purchasing.value = true
     error.value = null

@@ -1,5 +1,3 @@
-// src/utils/adminForm.js
-//
 // Small pure helpers the admin forms share: checks that return an error
 // message (or '' when the value is fine) and converters between what an
 // <input> holds and what Appwrite stores.

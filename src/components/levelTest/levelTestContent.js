@@ -1,5 +1,3 @@
-// src/components/levelTest/levelTestContent.js
-//
 // The level test's questions and texts. Kept as plain data, so adding or
 // changing a question never touches the components.
 //

@@ -1,5 +1,3 @@
-// src/components/speaking/speakingContent.js
-//
 // Fixed copy for the Speaking Club page. Sessions and hosts are real data
 // from Appwrite (liveClasses and teachers); this is only the marketing text.
 

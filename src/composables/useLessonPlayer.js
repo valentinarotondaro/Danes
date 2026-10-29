@@ -1,5 +1,3 @@
-// src/composables/useLessonPlayer.js
-//
 // Everything the lesson page needs: the course, its lessons, the teacher,
 // whether the learner has access, and their progress. "Mark as done" saves a
 // lessonProgress row, so the ✓ marks and the progress bar are real data.

@@ -1,4 +1,3 @@
-// src/components/admin/adminOptions.js
 // The fixed choices the admin forms offer. Same values Appwrite's enums accept.
 
 export const LEVEL_OPTIONS = [

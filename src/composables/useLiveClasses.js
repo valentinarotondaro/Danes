@@ -1,4 +1,3 @@
-// src/composables/useLiveClasses.js
 import { ref } from 'vue'
 import * as liveClassService from '@/services/liveClassService'
 

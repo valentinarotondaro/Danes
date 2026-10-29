@@ -1,5 +1,3 @@
-// src/composables/useEventSignup.js
-//
 // Everything one event card needs: spots, date labels, and the
 // "Save your spot" / "Join the waitlist" actions. Used by EventCard and
 // EventNextUp, so the logic lives in one place instead of being copied.

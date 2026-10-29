@@ -1,4 +1,3 @@
-// src/composables/usePackages.js
 import { ref } from 'vue'
 import * as packageService from '@/services/packageService'
 

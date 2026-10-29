@@ -1,8 +1,4 @@
-// src/services/appwriteClient.js
-//
-// Single source of truth for the Appwrite connection.
-// Every other file in services/ imports { client, account, databases } from here
-// instead of creating its own Client instance.
+// The one Appwrite connection. Every service imports from here.
 
 import { Client, Account, Databases, Teams, Functions } from 'appwrite'
 
@@ -15,9 +11,7 @@ export const databases = new Databases(client)
 export const teams = new Teams(client)
 export const functions = new Functions(client)
 
-
-// Central place to keep collection/database IDs so no magic strings
-// are scattered across service files.
+// IDs in one place, so no magic strings in the services
 export const DB_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID
 
 export const COLLECTIONS = {

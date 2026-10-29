@@ -1,5 +1,3 @@
-// src/services/progressService.js
-//
 // lessonProgress: one row per learner per lesson. `done` drives the ✓ marks
 // and the course progress bar. Each row is readable and editable only by its owner.
 

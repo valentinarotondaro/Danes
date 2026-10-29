@@ -1,4 +1,3 @@
-// src/services/packageService.js
 import { ID, Query } from 'appwrite'
 import { databases, DB_ID, COLLECTIONS } from './appwriteClient'
 
@@ -6,6 +5,7 @@ export async function listPublishedPackages() {
   const res = await databases.listDocuments(DB_ID, COLLECTIONS.PACKAGES, [
     Query.equal('published', true),
     Query.orderAsc('price'),
+    Query.limit(100), // Appwrite returns 25 by default
   ])
   return res.documents
 }
@@ -13,6 +13,7 @@ export async function listPublishedPackages() {
 export async function listAllPackages() {
   const res = await databases.listDocuments(DB_ID, COLLECTIONS.PACKAGES, [
     Query.orderAsc('price'),
+    Query.limit(100), // Appwrite returns 25 by default
   ])
   return res.documents
 }

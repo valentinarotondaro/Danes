@@ -1,5 +1,3 @@
-// src/utils/cardValidation.js
-//
 // Checks the demo card form before we create the order. Pure function:
 // it gets the values and returns the errors, so it is easy to test.
 // No card is ever charged: this only makes the form behave like a real one.

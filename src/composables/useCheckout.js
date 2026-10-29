@@ -1,5 +1,3 @@
-// src/composables/useCheckout.js
-//
 // The logic behind the checkout page: load the packages and courses, keep
 // track of what the learner picked, check the demo card and create the order.
 // CheckoutView only shows this state, it doesn't talk to Appwrite itself.

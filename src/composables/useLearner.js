@@ -1,5 +1,3 @@
-// src/composables/useLearner.js
-//
 // All the data of "My account", loaded once by AccountLayout and shared with
 // the four tabs through provide/inject. The rules (what the plan costs, how
 // far a course is…) live in utils/learner.js; this file loads and saves.

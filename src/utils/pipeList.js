@@ -1,5 +1,3 @@
-// src/utils/pipeList.js
-//
 // Appwrite has no "list of objects" field, so a list like the event's agenda
 // is saved as strings with | between the parts:
 //   ['09:30 | Meet at Store Torv | Name tags and hellos', ...]

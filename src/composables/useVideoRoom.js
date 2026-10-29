@@ -1,9 +1,5 @@
-// src/composables/useVideoRoom.js
-//
-// Wraps the Jitsi Meet External API (meet.jit.si, free public server — see
-// Step 8 stack decision). Isolating this here means the rest of the app
-// never touches Jitsi directly — if we ever swap providers, only this file
-// changes.
+// Wraps the Jitsi Meet External API (meet.jit.si, free public server).
+// The rest of the app never touches Jitsi, so swapping providers only changes this file.
 
 const JITSI_SCRIPT_SRC = 'https://meet.jit.si/external_api.js'
 let scriptLoadingPromise = null

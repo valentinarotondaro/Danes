@@ -1,5 +1,3 @@
-// src/utils/plans.js
-//
 // Small pure helpers for packages (the `bundles` collection).
 // A package says what it includes with three booleans:
 // includesCourse, includesSpeakingClub, includesEvents.

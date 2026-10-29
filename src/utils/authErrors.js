@@ -1,5 +1,3 @@
-// src/utils/authErrors.js
-//
 // Turns Appwrite's technical errors into messages people understand.
 // Appwrite sends a number (code) and a short name (type) with each error.
 

@@ -1,5 +1,3 @@
-// src/services/spotService.js
-//
 // Saves or gives back a spot in an event or live class by calling the
 // `reserve-spot` Appwrite Function. The browser can't update spotsBooked
 // itself (only admins can write those collections), so the server does it.

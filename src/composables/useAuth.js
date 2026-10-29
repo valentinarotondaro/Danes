@@ -1,9 +1,5 @@
-// src/composables/useAuth.js
-//
-// State declared OUTSIDE the function = shared across every component that
-// calls useAuth(). This is the module-level-composable pattern instead of Pinia.
-// Do not move these refs inside useAuth() — that would silently give every
-// component its own private copy and break session sharing app-wide.
+// State declared outside the function is shared by every component that calls
+// useAuth() (module-level state instead of Pinia). Inside, each would get its own copy.
 
 import { ref, computed } from 'vue'
 import * as authService from '@/services/authService'
@@ -17,10 +13,8 @@ const role = ref('guest')         // 'guest' | 'learner' | 'admin' — see resol
 
 const isLoggedIn = computed(() => currentUser.value !== null)
 
-// The real permission model lives in Appwrite Team membership (the "admins"
-// Team, referenced by Role.team('admins') on every admin-write collection).
-// This mirrors that, rather than trusting a client-editable field, so the
-// UI's notion of "am I admin" matches what the backend will actually allow.
+// Admin = member of the Appwrite team "admins", the same check the database
+// permissions use. A profile field could be edited by the user, a team can't.
 async function resolveRole() {
   if (!currentUser.value) {
     role.value = 'guest'
@@ -64,7 +58,7 @@ async function signup(email, password, name, journey = '') {
   try {
     await authService.signup(email, password, name)
     currentUser.value = await authService.getCurrentUser()
-     // journey = "How much Danish do you speak?" (only saved if they picked one)
+    // journey = "How much Danish do you speak?" (only saved if they picked one)
     await createProfile(currentUser.value.$id, name, email, journey ? { journey } : {})
     await resolveRole()
   } catch (err) {

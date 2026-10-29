@@ -1,4 +1,3 @@
-// src/services/orderService.js
 import { ID, Permission, Role, Query } from 'appwrite'
 import { databases, DB_ID, COLLECTIONS } from './appwriteClient'
 

@@ -1,8 +1,4 @@
-// src/services/authService.js
-//
-// Data-access layer only: talks to Appwrite Account. No reactive state here —
-// that lives in composables/useAuth.js. Keeping this split is what makes the
-// "services = data access, composables = application logic" separation real.
+// Data access only (Appwrite Account). The reactive state lives in useAuth.
 
 import { ID } from 'appwrite'
 import { account } from './appwriteClient'
@@ -21,8 +17,7 @@ export async function logout() {
 }
 
 export async function getCurrentUser() {
-  // Throws if there's no active session — callers should catch this
-  // and treat it as "not logged in", not as an unexpected error.
+  // Throws when there is no session: callers treat that as "not logged in"
   return account.get()
 }
 

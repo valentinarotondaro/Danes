@@ -1,5 +1,3 @@
-// src/composables/useLevelTest.js
-//
 // The whole level test flow: which screen we are on, the answers, the
 // result, and saving it to the learner's profile. The view only shows it.
 

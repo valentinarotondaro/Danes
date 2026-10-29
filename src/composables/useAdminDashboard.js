@@ -1,5 +1,3 @@
-// src/composables/useAdminDashboard.js
-//
 // Loads everything the dashboard needs in parallel (Promise.all) and turns it
 // into numbers with the pure functions in utils/adminStats.
 

@@ -1,4 +1,3 @@
-// src/composables/useCourses.js
 import { ref } from 'vue'
 import * as courseService from '@/services/courseService'
 import * as lessonService from '@/services/lessonService'

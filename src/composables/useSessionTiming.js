@@ -1,5 +1,3 @@
-// src/composables/useSessionTiming.js
-//
 // Wraps utils/sessionTiming.js in Vue: a clock that ticks every 30 seconds,
 // so "Starts in 8 minutes" and the Join button update on their own.
 

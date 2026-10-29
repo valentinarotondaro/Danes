@@ -1,5 +1,3 @@
-// src/utils/learner.js
-//
 // Pure helpers for My Account: they get documents and "now" and return what
 // the page shows. No Vue and no Appwrite here, so every rule is easy to test.
 

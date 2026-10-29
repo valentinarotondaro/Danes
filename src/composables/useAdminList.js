@@ -1,5 +1,3 @@
-// src/composables/useAdminList.js
-//
 // The logic of one admin list: load the documents, filter them (chips +
 // search), and delete one after the admin confirms. The view only shows it.
 // `config` is one entry of ADMIN_COLLECTIONS.

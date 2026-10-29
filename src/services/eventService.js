@@ -1,4 +1,3 @@
-// src/services/eventService.js
 import { ID, Query } from 'appwrite'
 import { databases, DB_ID, COLLECTIONS } from './appwriteClient'
 
@@ -6,6 +5,7 @@ export async function listPublishedEvents() {
   const res = await databases.listDocuments(DB_ID, COLLECTIONS.EVENTS, [
     Query.equal('published', true),
     Query.orderAsc('dateTime'),
+    Query.limit(100), // Appwrite returns 25 by default
   ])
   return res.documents
 }
@@ -13,6 +13,7 @@ export async function listPublishedEvents() {
 export async function listAllEvents() {
   const res = await databases.listDocuments(DB_ID, COLLECTIONS.EVENTS, [
     Query.orderAsc('dateTime'),
+    Query.limit(100), // Appwrite returns 25 by default
   ])
   return res.documents
 }
@@ -32,5 +33,3 @@ export async function updateEvent(id, data) {
 export async function deleteEvent(id) {
   return databases.deleteDocument(DB_ID, COLLECTIONS.EVENTS, id)
 }
-
-

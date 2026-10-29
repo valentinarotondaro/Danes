@@ -1,9 +1,5 @@
-// src/router/index.js
-//
-// Route table matches the 13 wireframe screens 1:1 (Step 5/7).
-// Guards check useAuth() state — this is the "navigation-level protection"
-// layer. Content-level gating (e.g. can this Learner watch THIS lesson)
-// happens inside the view itself via useCourseAccess, not here.
+// The guard below is navigation-level protection (UX). Lesson access is checked
+// in the view with useCourseAccess, and the real security is Appwrite permissions.
 
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
@@ -25,7 +21,7 @@ const routes = [
 
   // BELONG
   { path: '/events', name: 'event-list', component: () => import('@/views/EventListView.vue') },
-  { path: '/events/:id', name: 'event-detail', component: () => import('@/views/EventDetailView.vue') }, // NEW
+  { path: '/events/:id', name: 'event-detail', component: () => import('@/views/EventDetailView.vue') },
 
   // ABOUT
   { path: '/about', name: 'about', component: () => import('@/views/AboutView.vue') },
@@ -50,7 +46,6 @@ const routes = [
   { path: '/login', name: 'login', component: () => import('@/views/LoginView.vue'), meta: { guestOnly: true } },
   { path: '/signup', name: 'signup', component: () => import('@/views/SignupView.vue'), meta: { guestOnly: true } },
 
-  // Admin
   // Admin: its own layout with a sidebar (meta.focus hides the site header and footer).
   // The children share the layout; requiresAdmin on the parent protects all of them.
   {
@@ -65,13 +60,12 @@ const routes = [
     ],
   },
 
-  // Catch-all — must stay last. Without this, an unmatched URL just renders
-  // a blank page instead of giving the user any feedback.
+  // Catch-all: must stay last, so an unknown URL shows a 404 page instead of a blank one
   { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('@/views/NotFoundView.vue') },
 ]
 
 const router = createRouter({
-  // NEW: a new page starts at the top; a #hash scrolls to that section
+  // A new page starts at the top; a #hash scrolls to that section
   scrollBehavior(to) {
     if (to.hash) return { el: to.hash, behavior: 'smooth' }
     return { top: 0 }

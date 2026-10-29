@@ -1,4 +1,3 @@
-// src/composables/useTeachers.js
 import { ref } from 'vue'
 import * as teacherService from '@/services/teacherService'
 

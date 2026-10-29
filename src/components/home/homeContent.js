@@ -1,5 +1,3 @@
-// src/components/home/homeContent.js
-//
 // Fixed marketing copy for the home page. Kept out of the components so the
 // templates stay short and the text is easy to edit in one place.
 // Real data (courses, events) comes from Appwrite, not from here.

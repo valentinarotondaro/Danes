@@ -4,10 +4,31 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DANES Your bridge into Danish life</title>
+    <title>DANES — Your bridge into Danish life</title>
+    <style>
+      .splash { position: fixed; inset: 0; display: grid; place-items: center; background: #fff; }
+      .splash-logo { position: relative; width: 220px; }
+      .splash-logo img { display: block; width: 100%; }
+      .splash-base { opacity: .15; }
+      .splash-fill { position: absolute; inset: 0; animation: fill 1.4s ease-in-out infinite; }
+      @keyframes fill {
+        from { clip-path: inset(0 100% 0 0); }
+        to   { clip-path: inset(0 0 0 0); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .splash-fill { animation: none; }
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div class="splash">
+        <div class="splash-logo">
+          <img src="/img/danes-logo.png" alt="" class="splash-base">
+          <img src="/img/danes-logo.png" alt="Loading DANES" class="splash-fill">
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

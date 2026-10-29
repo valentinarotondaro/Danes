@@ -123,7 +123,7 @@ Every page that loads data shows one of three states: **loading** (skeletons), *
 - **Payments are simulated.** Checkout validates the card form and creates orders, but no money is charged. *V2:* Stripe Checkout plus a webhook Function that creates the order.
 - **Weekly sessions are separate rows.** "Repeat weekly" in the admin creates one row per Friday, so each date has its own capacity and attendees.
 - **Images are served from `public/img`.** Image paths are stored in the database as `/img/…`, so they need to be static files. Vite only ships files in `src/assets` when the code imports them.
-- **V2 ideas:** admin pages for orders and users, email reminders before a session, packages that make Friday bookings free automatically.
+
 
 ## Scripts
 

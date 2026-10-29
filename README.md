@@ -9,7 +9,7 @@ DANES is a Danish learning platform for internationals living in Denmark. It has
 Learners sign up, take a level test, buy a plan (a single course, the Speaking Club, events or a package), then follow lessons and book seats from **My account**. Admins manage all content from a separate **admin area**.
 
 **Live:** https://danes-app.vercel.app
-Exam project for Advanced JavaScript at EASV (Multimedia Design), made by Valentina Rotondaro.
+Exam project for Advanced JavaScript at Syddansk Erhvervsakademi (Multimedia Design)
 
 > Test accounts (learner and admin) are included in the exam submission, not in this repository.
 
@@ -155,5 +155,3 @@ Run these locally with a server API key in `.env`. Delete the key in Appwrite af
 - **Design:** AI simplified the Events page and added a "Your pick" tag to the plan picker. I rejected both. The tag didn't explain anything to the user. I redesigned the plan picker myself in two clear groups (single plans and packages) before it was coded.
 - **Details AI missed:** the logo looked pixelated (hard alpha edges). Images worked locally but broke on Vercel, because their paths pointed into `src/assets`, which only exists in development. I found both by checking the real result instead of trusting that the code "looked right".
 - **Security:** early on, a `.env` file with a server key was committed. I revoked the key, removed the file from the repo and added `.env` to `.gitignore`. Now only `VITE_` variables reach the frontend.
-
-**Reflection:** AI made me much faster at the parts with a clear right answer: boilerplate, refactoring, tests and explaining Appwrite APIs. Human judgement was still needed for what the product should do, how it should feel, and whether a suggestion actually solved the user's problem. I had to understand and test each suggestion, and I only kept the code I can explain.

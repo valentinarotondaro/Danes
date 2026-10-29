@@ -1,11 +1,12 @@
 <script setup>
 import { ref, watch } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import danesLogo from '@/assets/img/danes-logo.png'
 
 const { isLoggedIn, role, logout } = useAuth()
 const route = useRoute()
+const router = useRouter()
 
 const LINKS = [
   { to: '/courses', label: 'Courses' },
@@ -20,6 +21,12 @@ watch(() => route.fullPath, () => (menuOpen.value = false))
 
 // The current section gets the underline, also on /events/123 and similar
 const isActive = (to) => route.path === to || route.path.startsWith(`${to}/`)
+
+// After logging out, leave any private page (My account, lesson…) and go home
+async function onLogout() {
+  await logout()
+  router.push({ name: 'home' })
+}
 </script>
 
 <template>
@@ -46,7 +53,7 @@ const isActive = (to) => route.path === to || route.path.startsWith(`${to}/`)
         <template v-if="isLoggedIn">
           <RouterLink v-if="role === 'admin'" to="/admin" class="font-semibold text-ink no-underline hover:text-red">Admin</RouterLink>
           <RouterLink to="/account" class="rounded-ds bg-red px-6 py-3 font-semibold text-white no-underline hover:bg-red-hover">My account</RouterLink>
-          <button type="button" class="font-semibold text-ink hover:text-red" @click="logout">Log out</button>
+          <button type="button" class="font-semibold text-ink hover:text-red" @click="onLogout">Log out</button>
         </template>
         <template v-else>
           <RouterLink to="/signup" class="rounded-ds bg-red px-6 py-3 font-semibold text-white no-underline hover:bg-red-hover">Sign up</RouterLink>
@@ -82,14 +89,4 @@ const isActive = (to) => route.path === to || route.path.startsWith(`${to}/`)
       <div class="mt-2 flex flex-col gap-2 border-t border-ink pt-4">
         <template v-if="isLoggedIn">
           <RouterLink to="/account" class="rounded-ds bg-red px-6 py-3 text-center font-semibold text-white no-underline">My account</RouterLink>
-          <RouterLink v-if="role === 'admin'" to="/admin" class="flex min-h-12 items-center justify-center font-semibold text-ink no-underline">Admin</RouterLink>
-          <button type="button" class="min-h-12 font-semibold text-ink" @click="logout">Log out</button>
-        </template>
-        <template v-else>
-          <RouterLink to="/signup" class="rounded-ds bg-red px-6 py-3 text-center font-semibold text-white no-underline">Sign up</RouterLink>
-          <RouterLink to="/login" class="flex min-h-12 items-center justify-center font-semibold text-ink no-underline">Log in</RouterLink>
-        </template>
-      </div>
-    </nav>
-  </header>
-</template>
+          <RouterLink
